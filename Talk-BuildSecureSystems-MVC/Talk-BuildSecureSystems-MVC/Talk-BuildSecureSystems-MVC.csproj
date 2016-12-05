@@ -184,6 +184,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\SecuredController.cs" />
     <Compile Include="Framework\Authentication\RequiredPermissionAttribute.cs" />
     <Compile Include="Framework\Extensions\HelpfulExtensions.cs" />
@@ -200,14 +201,15 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Orders\OrderViewModels.cs" />
+    <Compile Include="Models\Orders\Order.cs" />
     <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\PermissionEnum.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\OrderService.cs" />
+    <Compile Include="Models\Orders\OrderService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +221,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="_README.txt" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -266,6 +269,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Products\Manage.cshtml" />
+    <Content Include="Views\Orders\View.cshtml" />
+    <Content Include="Views\Orders\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

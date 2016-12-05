@@ -1,0 +1,22 @@
+﻿@using Talk_BuildSecureSystems_MVC.Models.Orders;
+@{
+	ViewBag.Title = "All Orders";
+
+	var orders = (IList<Order>)(ViewBag.Orders);
+}
+<h2>@ViewBag.Title</h2>
+
+<table>
+	<tr>
+		<td>Id</td>
+		<td>Placed On</td>
+		<td>Customer</td>
+	</tr>
+	@foreach (var order in orders) {
+		<tr>
+			<td>@Html.ActionLink(order.Id.ToString(), "View", new { id = order.Id })
+			<td>@order.PlacedOn</td>
+			<td>@order.ApplicationUser.UserName</td>
+		</tr>
+	}
+</table>

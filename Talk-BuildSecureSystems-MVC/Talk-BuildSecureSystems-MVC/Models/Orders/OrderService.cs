@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Talk_BuildSecureSystems_MVC.Models;
 
-namespace Talk_BuildSecureSystems_MVC.Services {
+namespace Talk_BuildSecureSystems_MVC.Models.Orders {
 
 	public class OrderService {
 		private ApplicationDbContext _ctx;
 
 		public OrderService(ApplicationDbContext dbContext) {
 			_ctx = dbContext;
+		}
+
+		public IQueryable<Order> GetAll() {
+			return _ctx.Orders.AsQueryable();
 		}
 
 		public Order GetById(int id) {

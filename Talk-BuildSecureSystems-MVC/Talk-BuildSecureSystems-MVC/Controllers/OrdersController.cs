@@ -5,13 +5,31 @@ using System.Web;
 using System.Web.Mvc;
 using Talk_BuildSecureSystems_MVC.Framework.Authentication;
 using Talk_BuildSecureSystems_MVC.Models;
+using Talk_BuildSecureSystems_MVC.Models.Orders;
 
 namespace Talk_BuildSecureSystems_MVC.Controllers {
 
 	public class OrdersController : SecuredController {
 
+		protected OrderService OrderSvc {
+			get {
+				return _orderSvc ?? (_orderSvc = new OrderService(this.AppDbContext));
+			}
+			set { _orderSvc = value; }
+		}
+		private OrderService _orderSvc;
+
 		[RequiredPermission(PermissionEnum.BasicPrivileges)]
-		public ActionResult View(int id) {
+		public ActionResult List() {
+			ViewBag.Orders = OrderSvc.GetAll().ToList();
+
+			return View();
+		}
+
+		[RequiredPermission(PermissionEnum.BasicPrivileges)]
+		public ActionResult View_Insecure(int id) {
+			ViewBag.Model = OrderSvc.GetById(id);
+
 			return View();
 		}
 	}

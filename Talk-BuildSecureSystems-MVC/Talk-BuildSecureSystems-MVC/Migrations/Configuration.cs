@@ -6,6 +6,7 @@ namespace Talk_BuildSecureSystems_MVC.Migrations {
 	using System.Linq;
 	using Microsoft.AspNet.Identity;
 	using Models;
+	using Models.Orders;
 	internal sealed class Configuration : DbMigrationsConfiguration<Talk_BuildSecureSystems_MVC.Models.ApplicationDbContext> {
 
 		public Configuration() {
