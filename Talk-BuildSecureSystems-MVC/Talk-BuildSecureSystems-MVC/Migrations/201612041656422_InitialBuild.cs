@@ -11,7 +11,7 @@ namespace Talk_BuildSecureSystems_MVC.Migrations
                 "dbo.Permissions",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false),
                         Name = c.String(),
                     })
                 .PrimaryKey(t => t.Id);

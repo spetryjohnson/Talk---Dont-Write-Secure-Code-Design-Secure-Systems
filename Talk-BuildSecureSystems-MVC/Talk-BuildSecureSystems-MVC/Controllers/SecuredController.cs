@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Talk_BuildSecureSystems_MVC.Framework.Authentication;
 using Talk_BuildSecureSystems_MVC.Framework.Extensions;
 using Talk_BuildSecureSystems_MVC.Models;
@@ -10,10 +12,23 @@ using Talk_BuildSecureSystems_MVC.Models;
 namespace Talk_BuildSecureSystems_MVC.Controllers {
 	public class SecuredController : Controller {
 
+		public ApplicationUserManager UserManager {
+			get {
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set {
+				_userManager = value;
+			}
+		}
+		private ApplicationUserManager _userManager;
+
+
 		public ApplicationUser CurrentUser {
 			get {
 				if (this.m_currentUser == null) {
-					this.m_currentUser = new ApplicationUser();	// TODO
+					if (User.Identity.IsAuthenticated) {
+						this.m_currentUser = UserManager.FindById(User.Identity.GetUserId());
+					}
 				}
 				return this.m_currentUser;
 			}
@@ -30,11 +45,13 @@ namespace Talk_BuildSecureSystems_MVC.Controllers {
 				return;
 			}
 
+			var isLoggedIn = (CurrentUser != null);
 			var requiredPerm = permAttribute.Permission;
-			var hasRequiredPerm = CurrentUser.Permissions.Any(p => p.Id == (int)requiredPerm);
+			var hasRequiredPerm = isLoggedIn && CurrentUser.Permissions.Any(p => p.Id == (int)requiredPerm);
 
 			if (!hasRequiredPerm) {
 				context.Result = new HttpUnauthorizedResult();
+				return;
 			}
 		}
 	}
