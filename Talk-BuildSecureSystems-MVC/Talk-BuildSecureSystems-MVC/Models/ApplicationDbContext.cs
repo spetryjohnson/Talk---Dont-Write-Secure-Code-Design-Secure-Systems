@@ -16,5 +16,6 @@ namespace Talk_BuildSecureSystems_MVC.Models {
 			return new ApplicationDbContext();
 		}
 		public virtual DbSet<Permission> Permissions { get; set; }
+		public virtual DbSet<Order> Orders { get; set; }
 	}
 }
