@@ -28,9 +28,16 @@ namespace Talk_BuildSecureSystems_MVC.Controllers {
 
 		[RequiredPermission(PermissionEnum.BasicPrivileges)]
 		public ActionResult View_Insecure(int id) {
-			ViewBag.Model = OrderSvc.GetById(id);
+			ViewBag.Model = OrderSvc.GetByIdInsecure(id);
 
-			return View();
+			return View("View");
+		}
+
+		[RequiredPermission(PermissionEnum.BasicPrivileges)]
+		public ActionResult View_Secure(int id) {
+			ViewBag.Model = OrderSvc.GetByIdSecure(id, CurrentUser);
+
+			return View("View");
 		}
 	}
 }

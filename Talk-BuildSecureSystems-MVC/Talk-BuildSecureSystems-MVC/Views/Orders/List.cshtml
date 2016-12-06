@@ -11,12 +11,18 @@
 		<td>Id</td>
 		<td>Placed On</td>
 		<td>Customer</td>
+		<td></td>
 	</tr>
 	@foreach (var order in orders) {
 		<tr>
-			<td>@Html.ActionLink(order.Id.ToString(), "View", new { id = order.Id })
+			<td>@order.Id</td>
 			<td>@order.PlacedOn</td>
 			<td>@order.ApplicationUser.UserName</td>
+			<td>
+				@Html.ActionLink("Insecure", "View_Insecure", "Orders", new { id = order.Id }, null)
+				/
+				@Html.ActionLink("Secure", "View_Secure", "Orders", new { id = order.Id }, null)
+			</td>
 		</tr>
 	}
 </table>

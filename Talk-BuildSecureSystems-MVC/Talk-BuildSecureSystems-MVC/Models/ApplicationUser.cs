@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -21,6 +22,10 @@ namespace Talk_BuildSecureSystems_MVC.Models {
 
 		public ApplicationUser() {
 			Permissions = new List<Permission>();
+		}
+
+		public bool HasPermission(PermissionEnum perm) {
+			return Permissions.Any(p => p.Id == (int)perm);
 		}
 	}
 }

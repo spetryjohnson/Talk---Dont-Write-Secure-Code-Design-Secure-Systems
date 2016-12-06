@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Talk_BuildSecureSystems_MVC.Framework.Exceptions;
 
 namespace Talk_BuildSecureSystems_MVC.Models.Orders {
 
@@ -19,6 +20,25 @@ namespace Talk_BuildSecureSystems_MVC.Models.Orders {
 			return _ctx.Orders
 				.Where(o => o.Id == id)
 				.FirstOrDefault();
+		}
+
+		public Order GetByIdInsecure(int id) {
+			return _ctx.Orders
+				.Where(o => o.Id == id)
+				.FirstOrDefault();
+		}
+
+		public Order GetByIdSecure(int orderId, ApplicationUser activeUser) {
+			var order = GetByIdInsecure(orderId);
+
+			var cannotViewOrdersForOthers = !activeUser.HasPermission(PermissionEnum.ViewOrdersForOthers);
+			var isNotViewingOwnOrder = (order.ApplicationUser.UserName != activeUser.UserName);	// CAREFUL w/ EQUALITY CHECK
+
+			if (isNotViewingOwnOrder && cannotViewOrdersForOthers) {
+				throw new NotAuthorizedException($"User {activeUser.UserName} is not authorized to access order #{orderId}");
+            }
+
+			return order;
 		}
 	}
 }
