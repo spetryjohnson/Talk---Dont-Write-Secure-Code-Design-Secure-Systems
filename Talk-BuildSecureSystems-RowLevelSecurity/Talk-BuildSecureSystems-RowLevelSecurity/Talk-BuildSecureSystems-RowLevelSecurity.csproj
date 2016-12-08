@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201612050339403_01_AddedOrders.Designer.cs">
       <DependentUpon>201612050339403_01_AddedOrders.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612060340181_02_AddedRLS.cs" />
+    <Compile Include="Migrations\201612060340181_02_AddedRLS.Designer.cs">
+      <DependentUpon>201612060340181_02_AddedRLS.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Orders\OrderViewModels.cs" />
@@ -291,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612050339403_01_AddedOrders.resx">
       <DependentUpon>201612050339403_01_AddedOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612060340181_02_AddedRLS.resx">
+      <DependentUpon>201612060340181_02_AddedRLS.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
