@@ -7,6 +7,7 @@ namespace Talk_BuildSecureSystems_RowLevelSecurity.Migrations {
 	using Microsoft.AspNet.Identity;
 	using Models;
 	using Models.Orders;
+	using Microsoft.AspNet.Identity.EntityFramework;
 	internal sealed class Configuration : DbMigrationsConfiguration<Talk_BuildSecureSystems_RowLevelSecurity.Models.ApplicationDbContext> {
 
 		public Configuration() {
@@ -27,6 +28,7 @@ namespace Talk_BuildSecureSystems_RowLevelSecurity.Migrations {
 			//    );
 			//
 
+			// CREATE PERMISSIONS
 			var PERM_BASIC_PRIVS = new Permission { Id = (int)PermissionEnum.BasicPrivileges, Name = "Basic Privileges" };
 			var PERM_MANAGE_PRODS = new Permission { Id = (int)PermissionEnum.ManageProducts, Name = "Manage Products" };
 			var PERM_VIEW_ORDERS = new Permission { Id = (int)PermissionEnum.ViewOrdersForOthers, Name = "View Orders for Others" };
@@ -38,29 +40,30 @@ namespace Talk_BuildSecureSystems_RowLevelSecurity.Migrations {
 				PERM_VIEW_ORDERS
 			);
 
-			var password = new PasswordHasher().HashPassword("Passw0rd");
+			// CREATE PEOPLE
+			var userManager = new UserManager<ApplicationUser>(
+				new UserStore<ApplicationUser>(context)
+			);
 
 			var adminUser = new ApplicationUser {
 				UserName = "admin@example.com",
-				PasswordHash = password,
-				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_PRODS, PERM_VIEW_ORDERS },
-				SecurityStamp = Guid.NewGuid().ToString()
+				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_PRODS, PERM_VIEW_ORDERS }
 			};
+			userManager.Create(adminUser, "Passw0rd");
 
 			var user1 = new ApplicationUser {
 				UserName = "user1@example.com",
-				PasswordHash = password,
-				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS },
-				SecurityStamp = Guid.NewGuid().ToString()
+				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS }
 			};
+			userManager.Create(user1, "Passw0rd");
 
 			var user2 = new ApplicationUser {
 				UserName = "user2@example.com",
-				PasswordHash = password,
-				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS },
-				SecurityStamp = Guid.NewGuid().ToString()
+				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS }
 			};
+			userManager.Create(user2, "Passw0rd");
 
+			// CREATE ORDERS
 			context.Users.AddOrUpdate(
 				u => u.UserName,
 				adminUser,

@@ -187,6 +187,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\SecuredController.cs" />
     <Compile Include="Framework\Authentication\RequiredPermissionAttribute.cs" />
+    <Compile Include="Framework\DataAccess\SessionContextInterceptor.cs" />
     <Compile Include="Framework\Exceptions\NotAuthorizedException.cs" />
     <Compile Include="Framework\Extensions\HelpfulExtensions.cs" />
     <Compile Include="Global.asax.cs">
