@@ -1,0 +1,28 @@
+﻿@using BuildSecureSystems.Models.Orders;
+@{
+	ViewBag.Title = "All Orders";
+
+	var orders = (IList<Order>)(ViewBag.Orders);
+}
+<h2>@ViewBag.Title</h2>
+
+<table>
+	<tr>
+		<td>Id</td>
+		<td>Placed On</td>
+		<td>Customer</td>
+		<td></td>
+	</tr>
+	@foreach (var order in orders) {
+		<tr>
+			<td>@order.Id</td>
+			<td>@order.PlacedOn</td>
+			<td>@order.ApplicationUser.UserName</td>
+			<td>
+				@Html.ActionLink("Insecure", "View_Insecure", "Orders", new { id = order.Id }, null)
+				/
+				@Html.ActionLink("Secure", "View_Secure", "Orders", new { id = order.Id }, null)
+			</td>
+		</tr>
+	}
+</table>
