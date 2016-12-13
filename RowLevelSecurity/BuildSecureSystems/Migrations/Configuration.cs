@@ -76,6 +76,12 @@ namespace BuildSecureSystems.Migrations {
 				new Order { ApplicationUser = user1 },
 				new Order { ApplicationUser = user2 }
 			);
+
+			// CREATE API KEYS
+			context.ApiKeys.AddOrUpdate(
+				a => a.Id,
+				new ApiKey { ApplicationUser = user1, Description = "Sample API key", Permissions = $"{PermissionEnum.API_ViewOrders.ToString()}" }
+			);
 		}
 	}
 }

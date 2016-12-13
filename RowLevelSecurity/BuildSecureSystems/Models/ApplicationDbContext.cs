@@ -18,5 +18,6 @@ namespace BuildSecureSystems.Models {
 		}
 		public virtual DbSet<Permission> Permissions { get; set; }
 		public virtual DbSet<Order> Orders { get; set; }
+		public virtual DbSet<ApiKey> ApiKeys { get; set; }
 	}
 }
