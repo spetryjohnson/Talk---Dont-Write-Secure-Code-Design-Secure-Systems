@@ -191,6 +191,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Framework\Encryption\SampleEncryptor.cs" />
     <Compile Include="Framework\Exceptions\NotAuthorizedException.cs" />
     <Compile Include="Framework\Extensions\HelpfulExtensions.cs" />
+    <Compile Include="Framework\MaskedValue\MaskedValueAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,10 +233,14 @@
     <Compile Include="Migrations\201612140253401_04_Encryption.Designer.cs">
       <DependentUpon>201612140253401_04_Encryption.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612141528577_05_Masking.cs" />
+    <Compile Include="Migrations\201612141528577_05_Masking.Designer.cs">
+      <DependentUpon>201612141528577_05_Masking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApiKeys\ApiKey.cs" />
     <Compile Include="Models\ApiKeys\ApiKeyService.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Users\ApplicationUser.cs" />
     <Compile Include="Models\Orders\GetOrderApiArgs.cs" />
     <Compile Include="Models\Orders\OrderViewModels.cs" />
     <Compile Include="Models\Orders\Order.cs" />
@@ -243,6 +249,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Users\UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Orders\OrderService.cs" />
     <Compile Include="Startup.cs" />
@@ -307,6 +314,8 @@
     <Content Include="Views\Products\Manage.cshtml" />
     <Content Include="Views\Orders\View.cshtml" />
     <Content Include="Views\Orders\List.cshtml" />
+    <Content Include="Views\Users\List.cshtml" />
+    <Content Include="Views\Users\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,6 +343,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612140253401_04_Encryption.resx">
       <DependentUpon>201612140253401_04_Encryption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612141528577_05_Masking.resx">
+      <DependentUpon>201612141528577_05_Masking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

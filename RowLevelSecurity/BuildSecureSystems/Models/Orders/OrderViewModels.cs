@@ -5,7 +5,7 @@ using System.Diagnostics.Contracts;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace BuildSecureSystems.Models.Orders {
+namespace BuildSecureSystems.Models {
 
 	public class ViewOrderModel {
 		public int Id { get; set; }

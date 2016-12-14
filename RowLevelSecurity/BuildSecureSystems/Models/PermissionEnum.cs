@@ -6,8 +6,10 @@ namespace BuildSecureSystems.Models {
 	public enum PermissionEnum {
 		BasicPrivileges = 1,
 		ManageProducts = 100,
+		ManageUsers = 150,
 		ViewOrdersForOthers = 200,
-		ViewOrderCreditCard = 201,
+		ViewCreditCard = 250,
+		ViewSSN = 251,
 		API_ViewOrders = 300
 	}
 }

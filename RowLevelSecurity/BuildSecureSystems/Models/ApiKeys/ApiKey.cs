@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using BuildSecureSystems.Framework.Extensions;
 
-namespace BuildSecureSystems.Models.Orders {
+namespace BuildSecureSystems.Models {
 
 	public class ApiKey {
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BuildSecureSystems.Framework.Exceptions;
 
-namespace BuildSecureSystems.Models.Orders {
+namespace BuildSecureSystems.Models {
 
 	public class OrderService {
 		private ApplicationDbContext _ctx;

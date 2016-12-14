@@ -5,7 +5,6 @@ using System.Web.Http;
 using System.Net.Http;
 using BuildSecureSystems.Framework.Authentication;
 using BuildSecureSystems.Models;
-using BuildSecureSystems.Models.Orders;
 using System.Net;
 
 namespace BuildSecureSystems.Controllers {

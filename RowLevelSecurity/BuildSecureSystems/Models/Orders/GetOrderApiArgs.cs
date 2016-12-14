@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BuildSecureSystems.Models.Orders {
+namespace BuildSecureSystems.Models {
 
 	public class GetOrderApiArgs {
 		public int Id { get; set; }

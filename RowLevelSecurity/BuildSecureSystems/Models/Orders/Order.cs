@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
-namespace BuildSecureSystems.Models.Orders {
+namespace BuildSecureSystems.Models {
 
 	public class Order {
 
