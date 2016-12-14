@@ -1,3 +1,4 @@
+using BuildSecureSystems.Framework.Encryption;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,7 @@ namespace BuildSecureSystems.Models.Orders {
 		public virtual ApplicationUser ApplicationUser { get; set; }
 		public DateTime PlacedOn { get; set; }
 
+		[EncryptedValue]
 		public string CreditCardNumber { get; set; }
 
 		public Order() {

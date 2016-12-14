@@ -1,13 +1,14 @@
 namespace BuildSecureSystems.Migrations {
 	using System;
 	using System.Collections.Generic;
-	using System.Data.Entity;
 	using System.Data.Entity.Migrations;
-	using System.Linq;
 	using Microsoft.AspNet.Identity;
+	using Microsoft.AspNet.Identity.EntityFramework;
+
 	using Models;
 	using Models.Orders;
-	using Microsoft.AspNet.Identity.EntityFramework;
+	using Framework.Encryption;
+
 	internal sealed class Configuration : DbMigrationsConfiguration<BuildSecureSystems.Models.ApplicationDbContext> {
 
 		public Configuration() {
@@ -77,8 +78,8 @@ namespace BuildSecureSystems.Migrations {
 
 			context.Orders.AddOrUpdate(
 				o => o.Id,
-				new Order { ApplicationUser = user1, CreditCardNumber = "4111111111111111" },
-				new Order { ApplicationUser = user2, CreditCardNumber = "4111111111111111" }
+				new Order { ApplicationUser = user1, CreditCardNumber = SampleEncryptor.Encrypt("4111111111111111") },
+				new Order { ApplicationUser = user2, CreditCardNumber = SampleEncryptor.Encrypt("4111111111111112") }
 			);
 
 			// CREATE API KEYS
