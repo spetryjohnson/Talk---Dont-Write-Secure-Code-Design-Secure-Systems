@@ -210,6 +210,7 @@
     <Compile Include="Framework\Exceptions\NotAuthorizedException.cs" />
     <Compile Include="Framework\Extensions\HelpfulExtensions.cs" />
     <Compile Include="Framework\MaskedValue\MaskedValueAttribute.cs" />
+    <Compile Include="Framework\PostSharpAttributes\UserAwarePropertyInterceptor.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

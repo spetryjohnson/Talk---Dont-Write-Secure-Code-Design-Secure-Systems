@@ -13,7 +13,7 @@ namespace BuildSecureSystems.Models {
 
 		public virtual ICollection<Permission> Permissions { get; set; }
 
-		[MaskedValue]
+		[MaskedValue(PermissionEnum.ViewSSN)]
 		public string SSN { get; set; }
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager) {

@@ -21,5 +21,12 @@ namespace BuildSecureSystems.Models {
 				.Where(u => u.Id == id)
 				.FirstOrDefault();
 		}
+
+		public bool HasPermission(string id, PermissionEnum perm) {
+			return _ctx.Users
+				.Where(u => u.Id == id)
+				.Where(u => u.Permissions.Any(p => p.Id == (int)perm))
+				.Any();
+		}
 	}
 }
