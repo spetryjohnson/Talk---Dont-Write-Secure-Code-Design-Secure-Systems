@@ -14,6 +14,8 @@ namespace BuildSecureSystems.Models.Orders {
 		public virtual ApplicationUser ApplicationUser { get; set; }
 		public DateTime PlacedOn { get; set; }
 
+		public string CreditCardNumber { get; set; }
+
 		public Order() {
 			PlacedOn = DateTime.Now;
 		}

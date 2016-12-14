@@ -7,6 +7,7 @@ namespace BuildSecureSystems.Models {
 		BasicPrivileges = 1,
 		ManageProducts = 100,
 		ViewOrdersForOthers = 200,
+		ViewOrderCreditCard = 201,
 		API_ViewOrders = 300
 	}
 }

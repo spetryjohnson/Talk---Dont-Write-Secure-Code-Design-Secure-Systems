@@ -32,12 +32,16 @@ namespace BuildSecureSystems.Migrations {
 			var PERM_BASIC_PRIVS = new Permission { Id = (int)PermissionEnum.BasicPrivileges, Name = "Basic Privileges" };
 			var PERM_MANAGE_PRODS = new Permission { Id = (int)PermissionEnum.ManageProducts, Name = "Manage Products" };
 			var PERM_VIEW_ORDERS = new Permission { Id = (int)PermissionEnum.ViewOrdersForOthers, Name = "View Orders for Others" };
+			var PERM_VIEW_PAYMENT = new Permission { Id = (int)PermissionEnum.ViewOrderCreditCard, Name = "View Orders Payment Card" };
+			var PERM_API_VIEW_ORDERS = new Permission { Id = (int)PermissionEnum.API_ViewOrders, Name = "API: View Orders" };
 
 			context.Permissions.AddOrUpdate(
 				p => p.Id,
 				PERM_BASIC_PRIVS,
 				PERM_MANAGE_PRODS,
-				PERM_VIEW_ORDERS
+				PERM_VIEW_ORDERS,
+				PERM_VIEW_PAYMENT,
+				PERM_API_VIEW_ORDERS
 			);
 
 			// CREATE PEOPLE
@@ -47,7 +51,7 @@ namespace BuildSecureSystems.Migrations {
 
 			var adminUser = new ApplicationUser {
 				UserName = "admin@example.com",
-				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_PRODS, PERM_VIEW_ORDERS }
+				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_PRODS, PERM_VIEW_ORDERS, PERM_VIEW_PAYMENT }
 			};
 			userManager.Create(adminUser, "Passw0rd");
 
@@ -73,8 +77,8 @@ namespace BuildSecureSystems.Migrations {
 
 			context.Orders.AddOrUpdate(
 				o => o.Id,
-				new Order { ApplicationUser = user1 },
-				new Order { ApplicationUser = user2 }
+				new Order { ApplicationUser = user1, CreditCardNumber = "4111111111111111" },
+				new Order { ApplicationUser = user2, CreditCardNumber = "4111111111111111" }
 			);
 
 			// CREATE API KEYS
