@@ -7,28 +7,47 @@
 </div>
 
 <div class="row">
+	<div class="col-md-4">
+		<h2>Data Access Patterns</h2>
+		<p>
+			Compare the code for the "View_Secure" and "View_Insecure" details links on the @Html.ActionLink("Manage Orders", "Orders", "List") page 
+			for an example.
+		</p>
+		<p><a class="btn btn-default" href="@Url.Action("List", "Orders")">Demo &raquo;</a></p>
+	</div>
     <div class="col-md-4">
         <h2>Row Level Security</h2>
         <p>
 			The @Html.ActionLink("Orders List", "List", "Orders") will only show you your own orders, unless you
 			have permissions to see them all.
         </p>
+		<p>Log in with <b>user1@example.com</b> and <b>user2@example.com</b> to see filtered values.</p>
         <p><a class="btn btn-default" href="@Url.Action("List", "Orders")">Demo &raquo;</a></p>
     </div>
     <div class="col-md-4">
 		<h2>Perm Check w/ Attribute</h2>
 		<p>
-			The @Html.ActionLink("Manage Products", "Products", "Manage") page requires that you have the "Manage Products" 
-			permission to access it. (Only the admin account does)
+			The @Html.ActionLink("Manage Products", "Products", "Manage") page requires you to have the "Manage Products" 
+			permission to access it. Compare <b>admin@example.com</b> vs <b>user1@example.com</b>.
 		</p>
 		<p><a class="btn btn-default" href="@Url.Action("Manage", "Products")">Demo &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Masked Values</h2>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<h2>Encrypted Values</h2>
 		<p>
-			The @Html.ActionLink("Manage Users", "Users", "List") area requires a permission or else SSN values are 
-			automatically masked when displayed.
+			The @Html.ActionLink("Manage Orders", "Orders", "List") page automatically encrypts Credit Card data when it goes
+			into the database, and decrypts it for display on screen.
+		</p>
+		<p><a class="btn btn-default" href="@Url.Action("List", "Orders")">Demo &raquo;</a></p>
+	</div>
+	<div class="col-md-4">
+		<h2>Masked Values</h2>
+		<p>
+			The @Html.ActionLink("Manage Users", "Users", "List") will mask SSN values unless you have permission to see them. Compare
+			<b>admin@example.com</b> to <b>restrictedAdmin@example.com</b>.
 		</p>
 		<p><a class="btn btn-default" href="@Url.Action("List", "Users")">Demo &raquo;</a></p>
-    </div>
+	</div>
 </div>
