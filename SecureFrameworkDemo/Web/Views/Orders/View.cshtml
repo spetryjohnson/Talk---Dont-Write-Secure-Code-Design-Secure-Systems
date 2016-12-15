@@ -1,0 +1,16 @@
+﻿@using SecureFrameworkDemo.Models;
+@using SecureFrameworkDemo.Framework.Encryption;
+@{
+    ViewBag.Title = "Order Details";
+
+	var order = (Order)ViewBag.Model;
+}
+<h2>@ViewBag.Title</h2>
+
+<p>
+	Order <b>@order.Id</b> was placed on <b>@order.PlacedOn</b> by <b>@order.ApplicationUser.UserName</b>
+</p>
+<p>
+	The credit card used was <b>@order.CreditCardNumber</b>
+</p>
+

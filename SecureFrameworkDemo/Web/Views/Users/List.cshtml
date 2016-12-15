@@ -1,0 +1,26 @@
+﻿@using SecureFrameworkDemo.Models;
+@{
+	ViewBag.Title = "User List";
+
+	var users = (IList<ApplicationUser>)(ViewBag.Users);
+}
+<h2>@ViewBag.Title</h2>
+
+<table>
+	<tr>
+		<td>Id</td>
+		<td>UserName</td>
+		<td>SSN</td>
+		<td></td>
+	</tr>
+	@foreach (var user in users) {
+		<tr>
+			<td>@user.Id</td>
+			<td>@user.UserName</td>
+			<td>@user.SSN</td>
+			<td>
+				@Html.ActionLink("View Details", "Details", "User", new { id = user.Id }, null)
+			</td>
+		</tr>
+	}
+</table>
