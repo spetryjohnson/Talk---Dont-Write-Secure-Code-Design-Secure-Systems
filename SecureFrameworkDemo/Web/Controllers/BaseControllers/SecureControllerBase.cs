@@ -7,7 +7,7 @@ using SecureFrameworkDemo.Framework.WebPageAuthentication;
 
 namespace SecureFrameworkDemo.Controllers {
 
-	public class SecuredController : BaseController {
+	public class SecureControllerBase : BaseController {
 
 		protected override void OnActionExecuting(ActionExecutingContext context) {
 			// TODO: Move into the attribute itself

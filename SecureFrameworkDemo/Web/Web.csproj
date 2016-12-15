@@ -193,16 +193,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AntiCSRFController.cs" />
-    <Compile Include="Controllers\OrdersController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\APIController.cs" />
-    <Compile Include="Controllers\SecuredController.cs" />
+    <Compile Include="Controllers\StandardASPNet\AccountController.cs" />
+    <Compile Include="Controllers\SecureFrameworkDemo\AntiCSRFController.cs" />
+    <Compile Include="Controllers\SecureFrameworkDemo\OrdersController.cs" />
+    <Compile Include="Controllers\SecureFrameworkDemo\UsersController.cs" />
+    <Compile Include="Controllers\StandardASPNet\HomeController.cs" />
+    <Compile Include="Controllers\StandardASPNet\ManageController.cs" />
+    <Compile Include="Controllers\BaseControllers\BaseController.cs" />
+    <Compile Include="Controllers\SecureFrameworkDemo\APIController.cs" />
+    <Compile Include="Controllers\BaseControllers\SecureControllerBase.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiRequestBase.cs" />
     <Compile Include="Framework\ApiAuthentication\BearerTokenAuthorizationAttribute.cs" />
     <Compile Include="Framework\WebPageAuthentication\RequiredPermissionAttribute.cs" />
@@ -253,11 +252,11 @@
     <Compile Include="Models\Orders\GetOrderApiArgs.cs" />
     <Compile Include="Models\Orders\OrderViewModels.cs" />
     <Compile Include="Models\Orders\Order.cs" />
-    <Compile Include="Models\Permission.cs" />
-    <Compile Include="Models\PermissionEnum.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Permissions\Permission.cs" />
+    <Compile Include="Models\Permissions\PermissionEnum.cs" />
+    <Compile Include="Models\StandardASPNet\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\StandardASPNet\ManageViewModels.cs" />
     <Compile Include="Models\Users\UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Orders\OrderService.cs" />
@@ -320,7 +319,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Products\Manage.cshtml" />
     <Content Include="Views\Orders\View.cshtml" />
     <Content Include="Views\Orders\List.cshtml" />
     <Content Include="Views\Users\List.cshtml" />
@@ -336,7 +334,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>

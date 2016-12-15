@@ -8,7 +8,7 @@ using SecureFrameworkDemo.Models;
 
 namespace SecureFrameworkDemo.Controllers {
 
-	public class OrdersController : SecuredController {
+	public class OrdersController : SecureControllerBase {
 
 		protected OrderService OrderSvc {
 			get {

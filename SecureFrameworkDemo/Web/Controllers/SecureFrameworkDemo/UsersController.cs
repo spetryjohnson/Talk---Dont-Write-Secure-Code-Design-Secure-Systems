@@ -8,7 +8,7 @@ using SecureFrameworkDemo.Framework.WebPageAuthentication;
 
 namespace SecureFrameworkDemo.Controllers {
 
-	public class UsersController : SecuredController {
+	public class UsersController : SecureControllerBase {
 
 		protected UserService UserSvc {
 			get {

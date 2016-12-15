@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using SecureFrameworkDemo.Framework.WebPageAuthentication;
 using SecureFrameworkDemo.Models;
@@ -28,7 +25,7 @@ namespace SecureFrameworkDemo.Controllers {
 	/// the point :)  It exists primarily as a place to put this honkin' comment and to
 	/// host the endpoints for the demo app.
 	/// </summary>
-	public class AntiCSRFController : SecuredController {
+	public class AntiCSRFController : SecureControllerBase {
 
 		protected OrderService OrderSvc {
 			get {
