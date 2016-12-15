@@ -1,9 +1,13 @@
 ﻿@using SecureFrameworkDemo.Models;
+@using Santhos.Web.Mvc.BootstrapFlashMessages;
 @{
-	ViewBag.Title = "All Orders";
+	ViewBag.Title = "Order List (Secure Framework)";
 
 	var orders = (IList<Order>)(ViewBag.Orders);
 }
+
+@Html.FlashMessages(true)
+
 <h2>@ViewBag.Title</h2>
 
 <table>
@@ -11,6 +15,7 @@
 		<td>Id</td>
 		<td>Placed On</td>
 		<td>Customer</td>
+		<td>Customer SSN</td>
 		<td></td>
 	</tr>
 	@foreach (var order in orders) {
@@ -18,11 +23,8 @@
 			<td>@order.Id</td>
 			<td>@order.PlacedOn</td>
 			<td>@order.ApplicationUser.UserName</td>
-			<td>
-				@Html.ActionLink("Insecure", "View_Insecure", "Orders", new { id = order.Id }, null)
-				/
-				@Html.ActionLink("Secure", "View_Secure", "Orders", new { id = order.Id }, null)
-			</td>
+			<td>@order.ApplicationUser.SSN</td>
+			<td>@Html.ActionLink("View Details", "OrderDetail", "SecureFramework", new { id = order.Id }, null)</td>
 		</tr>
 	}
 </table>

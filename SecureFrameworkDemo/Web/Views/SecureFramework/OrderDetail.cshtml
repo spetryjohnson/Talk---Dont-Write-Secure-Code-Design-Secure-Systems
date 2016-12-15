@@ -1,0 +1,28 @@
+﻿@using SecureFrameworkDemo.Models;
+@using SecureFrameworkDemo.Framework.Encryption;
+@{
+    ViewBag.Title = "Order Details (Secure Framework)";
+
+	var order = (Order)ViewBag.Model;
+}
+<h2>@ViewBag.Title</h2>
+
+<table>
+	<tr>
+		<td>Order Id:</td>
+		<td>@order.Id</td>
+	</tr>
+	<tr>
+		<td>Customer:</td>
+		<td>@order.ApplicationUser.UserName (@order.ApplicationUser.SSN)</td>
+	</tr>
+</table>
+
+<h3>Standard Form Post</h3>
+<p>
+	Click this button to initiate a form post. (For testing CSRF stuff)
+</p>
+<form action="@Url.Action("ModifyOrder", "SecureFramework")" method="post">
+	<input type="hidden" name="id" value="@order.Id" />
+	<input type="submit" value="Submit Form" />
+</form>

@@ -193,15 +193,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DemoApp\InsecureController.cs" />
+    <Compile Include="Controllers\DemoApp\SecureFrameworkController.cs" />
+    <Compile Include="Controllers\DemoApp\SecureFeatureController.cs" />
     <Compile Include="Controllers\StandardASPNet\AccountController.cs" />
-    <Compile Include="Controllers\SecureFrameworkDemo\AntiCSRFController.cs" />
-    <Compile Include="Controllers\SecureFrameworkDemo\OrdersController.cs" />
-    <Compile Include="Controllers\SecureFrameworkDemo\UsersController.cs" />
     <Compile Include="Controllers\StandardASPNet\HomeController.cs" />
     <Compile Include="Controllers\StandardASPNet\ManageController.cs" />
-    <Compile Include="Controllers\BaseControllers\BaseController.cs" />
-    <Compile Include="Controllers\SecureFrameworkDemo\APIController.cs" />
-    <Compile Include="Controllers\BaseControllers\SecureControllerBase.cs" />
+    <Compile Include="Controllers\DemoApp\BaseControllers\BaseController.cs" />
+    <Compile Include="Controllers\DemoAPI\APIController.cs" />
+    <Compile Include="Controllers\DemoApp\BaseControllers\SecureControllerBase.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiRequestBase.cs" />
     <Compile Include="Framework\ApiAuthentication\BearerTokenAuthorizationAttribute.cs" />
     <Compile Include="Framework\WebPageAuthentication\RequiredPermissionAttribute.cs" />
@@ -248,6 +248,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApiKeys\ApiKey.cs" />
     <Compile Include="Models\ApiKeys\ApiKeyService.cs" />
+    <Compile Include="Models\Orders\OrderServiceInsecure.cs" />
     <Compile Include="Models\Users\ApplicationUser.cs" />
     <Compile Include="Models\Orders\GetOrderApiArgs.cs" />
     <Compile Include="Models\Orders\OrderViewModels.cs" />
@@ -319,11 +320,13 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Orders\View.cshtml" />
-    <Content Include="Views\Orders\List.cshtml" />
-    <Content Include="Views\Users\List.cshtml" />
-    <Content Include="Views\Users\Detail.cshtml" />
-    <Content Include="Views\AntiCSRF\ModifyOrder.cshtml" />
+    <Content Include="Views\SecureFramework\__deleteme_ModifyOrder.cshtml" />
+    <Content Include="Views\Insecure\OrderList.cshtml" />
+    <Content Include="Views\Insecure\OrderDetail.cshtml" />
+    <Content Include="Views\SecureFeature\OrderDetail.cshtml" />
+    <Content Include="Views\SecureFeature\OrderList.cshtml" />
+    <Content Include="Views\SecureFramework\OrderDetail.cshtml" />
+    <Content Include="Views\SecureFramework\OrderList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
