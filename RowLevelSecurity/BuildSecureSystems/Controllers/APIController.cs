@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Net.Http;
-using BuildSecureSystems.Framework.Authentication;
-using BuildSecureSystems.Models;
 using System.Net;
+using BuildSecureSystems.Framework.ApiAuthentication;
+using BuildSecureSystems.Models;
 
 namespace BuildSecureSystems.Controllers {
 

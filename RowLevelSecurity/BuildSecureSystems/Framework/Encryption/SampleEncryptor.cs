@@ -1,16 +1,16 @@
 ﻿using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Crypto.Engines;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace BuildSecureSystems.Framework.Encryption {
 
 	/// <summary>
-	/// This is not a good example of how to do this. Just KISS for the demo...
+	/// This is not a good example of how to do encryption. Just KISS for the demo. In real code
+	/// you'd need to store your keys external to the code, and then access them from here. You
+	/// would probably also want to cache the decrypted version so that you're not repeating a 
+	/// computentionally expensive process on every read.
+	/// 
+	/// Consider using something like this instead: https://github.com/jkuemerle/EncryptedType
 	/// </summary>
 	public static class SampleEncryptor {
 

@@ -3,13 +3,13 @@ using Microsoft.AspNet.Identity;
 using PostSharp.Aspects;
 using PostSharp.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Web;
 
-namespace BuildSecureSystems.Framework.PostSharpAttributes {
+namespace BuildSecureSystems.Framework.PropertyAccessAuthorization {
 
+	/// <summary>
+	/// Base class for PostSharp aspects that provides a UserService and the identity of the current user.
+	/// </summary>
 	[PSerializable]
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 	public class UserAwarePropertyInterceptor : LocationInterceptionAspect {

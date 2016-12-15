@@ -6,8 +6,10 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 
-namespace BuildSecureSystems.Framework.Extensions {
+namespace BuildSecureSystems.Framework {
+
 	public static class HelpfulExtensions {
+
 		public static T GetAttribute<T>(this ICustomAttributeProvider member) where T : class {
 			return ((typeof(T) == typeof(object))
 				? (T[])member.GetCustomAttributes(false)
@@ -21,6 +23,7 @@ namespace BuildSecureSystems.Framework.Extensions {
 		public static bool IsNullOrEmpty(this string val) {
 			return (val == null || val == String.Empty);
 		}
+
 		/// <summary>
 		/// Concatenates all items in the list into a string, delimited by the specified
 		/// delimiter.

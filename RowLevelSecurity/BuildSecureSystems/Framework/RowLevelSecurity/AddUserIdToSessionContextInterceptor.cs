@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Interception;
-using System.Linq;
-using System.Web;
 
-namespace Talk_BuildSecureSystems_MVC.Framework.DataAccess {
+namespace BuildSecureSystems.Framework.RowLevelSecurity {
 
 	/// <summary>
 	/// See https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-dotnet-entity-framework-row-level-security
+	/// 
+	/// This requires SQL Server 2016 to work. 
+	/// 
+	/// TODO: Put a flag in web.config that disables the RLS stuff, so that the demo can be run locally without it.
 	/// </summary>
-	public class SessionContextInterceptor : IDbConnectionInterceptor {
+	public class AddUserIdToSessionContextInterceptor : IDbConnectionInterceptor {
 
 		public void Opened(DbConnection connection, DbConnectionInterceptionContext interceptionContext) {
 			// Set SESSION_CONTEXT to current UserId whenever EF opens a connection
@@ -106,7 +106,7 @@ namespace Talk_BuildSecureSystems_MVC.Framework.DataAccess {
 
 	public class SessionContextConfiguration : DbConfiguration {
 		public SessionContextConfiguration() {
-			AddInterceptor(new SessionContextInterceptor());
+			AddInterceptor(new AddUserIdToSessionContextInterceptor());
 		}
 	}
 }

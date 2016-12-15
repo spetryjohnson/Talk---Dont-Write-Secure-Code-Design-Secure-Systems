@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BuildSecureSystems.Framework.ApiAuthentication;
+using System;
 
 namespace BuildSecureSystems.Models {
 
-	public class GetOrderApiArgs {
+	public class GetOrderApiArgs : ApiRequestBase {
 		public int Id { get; set; }
 	}
 }

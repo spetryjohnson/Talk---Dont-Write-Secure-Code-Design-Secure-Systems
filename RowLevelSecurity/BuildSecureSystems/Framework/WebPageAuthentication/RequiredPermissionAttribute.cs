@@ -4,8 +4,11 @@ using System.Linq;
 using System.Web;
 using BuildSecureSystems.Models;
 
-namespace BuildSecureSystems.Framework.Authentication {
+namespace BuildSecureSystems.Framework.WebPageAuthentication {
 
+	/// <summary>
+	/// MVC Action Filter that requires the current user to have the specified permission.
+	/// </summary>
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
 	public class RequiredPermissionAttribute : Attribute {
 

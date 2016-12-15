@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BuildSecureSystems.Framework.API {
+namespace BuildSecureSystems.Framework.ApiAuthentication {
 
 	/// <summary>
 	/// Base class for WebAPI requests. Encapsulates the common data used for API request authentication.
@@ -20,5 +20,6 @@ namespace BuildSecureSystems.Framework.API {
 		/// also want them to be hard to guess. Requiring 2 GUIDs is pretty darn hard to guess)
 		/// </summary>
 		public string ApiKeyOwner { get; set; }
+
 	}
 }

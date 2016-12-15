@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using BuildSecureSystems.Framework.Exceptions;
+using BuildSecureSystems.Framework;
 
 namespace BuildSecureSystems.Models {
 
