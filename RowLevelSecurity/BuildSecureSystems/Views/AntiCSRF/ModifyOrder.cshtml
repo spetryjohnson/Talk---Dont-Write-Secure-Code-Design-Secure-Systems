@@ -31,6 +31,8 @@
 
 @if (thisOrder != null) {
 	<form action="@Url.Action("ModifyOrderPost", "AntiCSRF")" method="post">
+		@Html.AntiForgeryToken()
+
 		<table border="0">
 			<tr>
 				<td>Order Id:</td>

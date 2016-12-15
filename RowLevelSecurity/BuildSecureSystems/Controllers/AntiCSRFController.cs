@@ -52,9 +52,10 @@ namespace BuildSecureSystems.Controllers {
 
 		[HttpPost]
 		[RequiredPermission(PermissionEnum.BasicPrivileges)]
+		[ValidateAntiForgeryToken]
 		public ActionResult ModifyOrderPost() {
-			// TODO
-			this.FlashSuccess("Order modified");
+			// TODO: actually change something 
+			this.FlashSuccess("POST successful. (NOTE: No data were changed - haven't implemented any of that yet)");
 			return RedirectToAction("ModifyOrder", new {  });
 		}
 	}
