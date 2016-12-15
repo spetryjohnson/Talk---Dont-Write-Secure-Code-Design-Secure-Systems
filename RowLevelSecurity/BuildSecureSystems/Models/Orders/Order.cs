@@ -14,6 +14,7 @@ namespace BuildSecureSystems.Models {
 		public int Id { get; set; }
 		public virtual ApplicationUser ApplicationUser { get; set; }
 		public DateTime PlacedOn { get; set; }
+		public decimal Amount { get; set; }
 
 		[EncryptedValue]
 		public string CreditCardNumber { get; set; }

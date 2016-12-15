@@ -91,8 +91,8 @@ namespace BuildSecureSystems.Migrations {
 
 			context.Orders.AddOrUpdate(
 				o => o.Id,
-				new Order { ApplicationUser = user1, CreditCardNumber = SampleEncryptor.Encrypt("4111111111111111") },
-				new Order { ApplicationUser = user2, CreditCardNumber = SampleEncryptor.Encrypt("4111111111111112") }
+				new Order { ApplicationUser = user1, Amount = 42.42m, CreditCardNumber = SampleEncryptor.Encrypt("4111111111111111") },
+				new Order { ApplicationUser = user2, Amount = 99.99m, CreditCardNumber = SampleEncryptor.Encrypt("4111111111111112") }
 			);
 
 			// CREATE API KEYS

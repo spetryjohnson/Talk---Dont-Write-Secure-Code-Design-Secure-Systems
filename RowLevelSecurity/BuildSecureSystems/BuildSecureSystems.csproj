@@ -59,6 +59,10 @@
       <HintPath>..\packages\PostSharp.4.3.24\lib\net35-client\PostSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Santhos.Web.Mvc.BootstrapFlashMessages, Version=0.1.1.22752, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Santhos.Web.Mvc.BootstrapFlashMessages.0.1.1.22752\lib\net45\Santhos.Web.Mvc.BootstrapFlashMessages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -190,6 +194,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AntiCSRFController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -237,6 +242,10 @@
     <Compile Include="Migrations\201612141528577_05_Masking.cs" />
     <Compile Include="Migrations\201612141528577_05_Masking.Designer.cs">
       <DependentUpon>201612141528577_05_Masking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612150322158_06_OrderAmount.cs" />
+    <Compile Include="Migrations\201612150322158_06_OrderAmount.Designer.cs">
+      <DependentUpon>201612150322158_06_OrderAmount.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApiKeys\ApiKey.cs" />
@@ -317,6 +326,7 @@
     <Content Include="Views\Orders\List.cshtml" />
     <Content Include="Views\Users\List.cshtml" />
     <Content Include="Views\Users\Detail.cshtml" />
+    <Content Include="Views\AntiCSRF\ModifyOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -347,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612141528577_05_Masking.resx">
       <DependentUpon>201612141528577_05_Masking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612150322158_06_OrderAmount.resx">
+      <DependentUpon>201612150322158_06_OrderAmount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
