@@ -1,12 +1,16 @@
 ﻿@{
-    ViewBag.Title = "Secure Feature Demo - Home";
+	ViewBag.Title = "Secure Feature Demo - Home";
+
+	var ORDER_LIST_URL = Url.Action("OrderList", "SecureFeature");
+	var MANAGE_ORDER_URL = Url.Action("ManageOrders", "SecureFeature");
+	var ORDER_DETAIL_URL = Url.Action("OrderDetail", "SecureFeature", new { id = 1 });
 }
 
 <div class="jumbotron">
     <h1>Secure Features Demo</h1>
 	<p>This demo shows a simple set of features where the security concerns are handled in application level code.</p>
 	<p>Compare the code in the <b>SecureFeatureController</b> and related views to the other controllers.</p>
-	<p><a class="btn btn-default" href="@Url.Action("OrderList", "SecureFeature")">Begin &raquo;</a></p>
+	<p><a class="btn btn-default" href="@ORDER_LIST_URL">Begin &raquo;</a></p>
 </div>
 
 <div class="row">
@@ -18,16 +22,17 @@
 		</p>
 	</div>
 	<div class="col-md-4">
-		<h2>Authorization</h2>
+		<h2>Page Authorization</h2>
 		<p>
-			The "Manage Orders" action does an explicit permissions check in app code.
+			Permission checks are done explicitly in app code. For instance, only admins should be able to
+			get to the <a href="@MANAGE_ORDER_URL">Manage Orders</a> page.
 		</p>
 	</div>
 	<div class="col-md-4">
 		<h2>Access Control</h2>
 		<p>
-			The "Order List" and "Order Detail" actions both contain explicit checks, in app code, that prevent users
-			from seeing orders they don't own, unless they have the <b>ManageOrders</b> permission.
+			User level access control is done explicitly in app code. For instance, on the <a href="@ORDER_LIST_URL">Order List</a>
+			and <a href="@ORDER_DETAIL_URL">Order Detail</a> pages, USER1 and USER2 should see only their own data. (Admins can see all data)
 		</p>
 	</div>
 </div>
@@ -35,7 +40,8 @@
 	<div class="col-md-4">
 		<h2>Sensitive Data</h2>
 		<p>
-			The view model does an explicit permission check before un-masking the SSN, which means the view model needs to know about the current user.
+			App code explicitly checks whether the user is allowed to view the un-masked SSN. The ADMIN account can
+			see it, the RESTRICTEDADMIN account cannot.
 		</p>
 	</div>
 	<div class="col-md-4">
@@ -47,8 +53,8 @@
 	<div class="col-md-4">
 		<h2>Anti-CSRF</h2>
 		<p>
-			The "Order Detail" page includes the standard ASPNET anti-forgery token, and the corresponding MVC action validates it using the [ValidateAntiForgeryToken]
-			attribute.
+			The <a href="@ORDER_DETAIL_URL">Order Detail</a> page includes the standard ASPNET anti-forgery token, and the corresponding 
+			MVC action validates it using the <b>[ValidateAntiForgeryToken]</b> attribute.
 		</p>
 	</div>
 </div>

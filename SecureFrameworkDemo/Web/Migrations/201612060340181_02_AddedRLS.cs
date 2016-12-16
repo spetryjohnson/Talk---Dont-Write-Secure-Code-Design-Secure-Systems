@@ -1,9 +1,17 @@
 namespace SecureFrameworkDemo.Migrations {
 	using System;
+	using System.Configuration;
 	using System.Data.Entity.Migrations;
+	using Framework;
 
 	public partial class _02_AddedRLS : DbMigration {
 		public override void Up() {
+			var rlsEnabled = ConfigurationManager.AppSettings["EnableRowLevelSecurity"].ToBoolean(false);
+
+			if (!rlsEnabled) {
+				return;
+			}
+
 			Sql(@"
 				CREATE SCHEMA Security
 				go
@@ -40,6 +48,12 @@ namespace SecureFrameworkDemo.Migrations {
 		}
 
 		public override void Down() {
+			var rlsEnabled = ConfigurationManager.AppSettings["EnableRowLevelSecurity"].ToBoolean(false);
+
+			if (!rlsEnabled) {
+				return;
+			}
+
 			Sql(@"
 				DROP SECURITY POLICY IF EXISTS Security.orderAccessControlPolicy;
 				DROP FUNCTION IF EXISTS Security.currentUserCanViewAllOrdersOrIdEquals;

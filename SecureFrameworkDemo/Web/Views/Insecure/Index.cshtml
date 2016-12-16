@@ -13,20 +13,19 @@
 	<div class="col-md-4">
 		<h2>Anonymous Access</h2>
 		<p>
-			Nothing in this demo prevents anonymous users from using the site.
+			Nothing prevents anonymous users from getting to "private" pages.
 		</p>
 	</div>
 	<div class="col-md-4">
-		<h2>Authorization</h2>
+		<h2>Page Authorization</h2>
 		<p>
-			The "Manage Orders" page <i>should</i> do a permission check, but in the insecure demo it doesn't.
+			Permission requirements for specific pages are not enforced. 
 		</p>
 	</div>
 	<div class="col-md-4">
 		<h2>Access Control</h2>
 		<p>
-			Nothing in this demo prevents one user from viewing data for another user. Log in as <b>user1@example.com</b>
-			and you can still see stuff for user2.
+			Nothing prevents one user from viewing another user's data.
 		</p>
 	</div>
 </div>
@@ -34,19 +33,19 @@
 	<div class="col-md-4">
 		<h2>Sensitive Data</h2>
 		<p>
-			Nothing in the insecure demo prevents users from viewing the raw SSN stored in the database. 
+			User SSNs are not protected in any way.
 		</p>
 	</div>
 	<div class="col-md-4">
 		<h2>Encryption</h2>
 		<p>
-			(TODO) Credit card numbers are stored in plain text in this insecure demo.
+			(TODO) Credit card numbers are stored in plain text in the database.
 		</p>
 	</div>
 	<div class="col-md-4">
 		<h2>Anti-CSRF</h2>
 		<p>
-			Nothing in the insecure demo prevents CSRF. Use the CSRF Attacker app (separate proj in this repo) to attack
+			Nothing prevents CSRF. Use the CSRF Attacker app (separate proj in this repo) to attack
 			this website.
 		</p>
 	</div>

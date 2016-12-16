@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,6 +10,17 @@ using System.Web;
 namespace SecureFrameworkDemo.Framework {
 
 	public static class HelpfulExtensions {
+
+		/// <summary>
+		/// Returns TRUE if the string contains the specified target, using a case-insensitive 
+		/// Contains() operation.
+		/// </summary>
+		public static bool ContainsIgnoringCase(this string val, string target) {
+			if (val == null)
+				return false;
+
+			return val.IndexOf(target, StringComparison.CurrentCultureIgnoreCase) >= 0;
+		}
 
 		public static T GetAttribute<T>(this ICustomAttributeProvider member) where T : class {
 			return ((typeof(T) == typeof(object))
@@ -22,6 +34,13 @@ namespace SecureFrameworkDemo.Framework {
 		/// </summary>
 		public static bool IsNullOrEmpty(this string val) {
 			return (val == null || val == String.Empty);
+		}
+
+		/// <summary>
+		/// Returns TRUE if the string instance is neither null or an empty string.
+		/// </summary>
+		public static bool IsNotNullOrEmpty(this string val) {
+			return val.IsNullOrEmpty() == false;
 		}
 
 		/// <summary>
@@ -47,6 +66,56 @@ namespace SecureFrameworkDemo.Framework {
 			return (joinedString.Length == 0)
 				? ""
 				: joinedString.Substring(delimiter.Length);
+		}
+
+		/// <summary>
+		/// Parses the string as a boolean, matching commonly used representations ("1", "Y", "no", etc)
+		/// to their appropriate boolean p_value. Throws an exception if the string does not match
+		/// any expected representation.
+		/// </summary>
+		public static bool ToBoolean(this string val) {
+			Contract.Requires(val.IsNotNullOrEmpty(), "The string to parse cannot be null or empty.");
+
+			bool result;
+
+			if (Boolean.TryParse(val, out result))
+				return result;
+			else {
+				switch (val.ToUpper()) {
+					case "T":
+					case "TRUE":
+					case "Y":
+					case "YES":
+					case "1":
+						return true;
+
+					case "F":
+					case "FALSE":
+					case "N":
+					case "NO":
+					case "0":
+						return false;
+				}
+
+				throw new FormatException("Can't parse '" + val + "' as a boolean.");
+			}
+		}
+
+		/// <summary>
+		/// Parses the string as a boolean, matching commonly used representations ("1", "Y", "no", etc)
+		/// to their appropriate boolean p_value. 
+		/// </summary>
+		public static bool ToBoolean(this string val, bool defaultVal) {
+			if (val.IsNullOrEmpty()) {
+				return defaultVal;
+			}
+
+			try {
+				return val.ToBoolean();
+			}
+			catch (FormatException) {
+				return defaultVal;
+			}
 		}
 
 		/// <summary>

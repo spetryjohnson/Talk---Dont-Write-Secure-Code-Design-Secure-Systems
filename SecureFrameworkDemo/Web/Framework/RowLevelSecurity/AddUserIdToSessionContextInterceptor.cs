@@ -1,33 +1,48 @@
 ﻿using Microsoft.AspNet.Identity;
+using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Web;
 
 namespace SecureFrameworkDemo.Framework.RowLevelSecurity {
 
 	/// <summary>
 	/// See https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-dotnet-entity-framework-row-level-security
 	/// 
-	/// This requires SQL Server 2016 to work. 
-	/// 
-	/// TODO: Put a flag in web.config that disables the RLS stuff, so that the demo can be run locally without it.
+	/// This requires SQL Server 2016 to work. You can turn this off in web.config if you want to use SQL Express
 	/// </summary>
 	public class AddUserIdToSessionContextInterceptor : IDbConnectionInterceptor {
 
 		public void Opened(DbConnection connection, DbConnectionInterceptionContext interceptionContext) {
+
+			var rlsEnabled = ConfigurationManager.AppSettings["EnableRowLevelSecurity"].ToBoolean(false);
+			if (!rlsEnabled) {
+				return;
+			}
+
+			// HACK FOR DEMO APP: Need to disable this for the "insecure" and "secure feature" areas of the site.
+			// This demonstrates that secure frameworks are all about making it SECURE BY DEFAULT, and then requiring
+			// extra effort to be INSECURE, which should be the non-common case. 
+			var isSecureFrameworkArea = HttpContext.Current.Request.RawUrl.ContainsIgnoringCase("SecureFramework");
+			if (!isSecureFrameworkArea) {
+				return;
+			}
+
 			// Set SESSION_CONTEXT to current UserId whenever EF opens a connection
+			// There are table-level predicates defined during the EF Migrations that look for
+			// this value and, if present, implement whatever logic is necessary
 			try {
 				var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
 				if (userId != null) {
-					// temporarily removed while working on insecure setuff
-					//DbCommand cmd = connection.CreateCommand();
-					//cmd.CommandText = "EXEC sp_set_session_context @key=N'UserId', @value=@UserId";
-					//DbParameter param = cmd.CreateParameter();
-					//param.ParameterName = "@UserId";
-					//param.Value = userId;
-					//cmd.Parameters.Add(param);
-					//cmd.ExecuteNonQuery();
+					DbCommand cmd = connection.CreateCommand();
+					cmd.CommandText = "EXEC sp_set_session_context @key=N'UserId', @value=@UserId";
+					DbParameter param = cmd.CreateParameter();
+					param.ParameterName = "@UserId";
+					param.Value = userId;
+					cmd.Parameters.Add(param);
+					cmd.ExecuteNonQuery();
 				}
 			}
 			catch (System.NullReferenceException) {
