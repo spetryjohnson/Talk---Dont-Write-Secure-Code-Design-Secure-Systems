@@ -1,20 +1,30 @@
 ﻿@using SecureFrameworkDemo.Models;
-@using SecureFrameworkDemo.Framework.Encryption;
+@model InsecureOrderViewModel
 @{
-    ViewBag.Title = "Order Details (Insecure)";
-
-	var order = (InsecureOrderViewModel)ViewBag.Model;
+    ViewBag.Title = "Order Details - Insecure";
 }
-<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_IntraDemoNav", "OrderDetail")
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		This page:
+		<ul>
+			<li>Is available anonymously</li>
+			<li>Does not prevent USER1 from seeing USER2's data</li>
+			<li>Does not restrict access to the SSN</li>
+		</ul>
+	</div>
+</div>
 
 <table>
 	<tr>
 		<td>Order Id:</td>
-		<td>@order.Id</td>
+		<td>@Model.Id</td>
 	</tr>
 	<tr>
 		<td>Customer:</td>
-		<td>@order.UserName (@order.SSN)</td>
+		<td>@Model.UserName (@Model.SSN)</td>
 	</tr>
 </table>
 
@@ -23,6 +33,6 @@
 	Click this button to initiate a form post. (For testing CSRF stuff)
 </p>
 <form action="@Url.Action("ModifyOrder", "Insecure")" method="post">
-	<input type="hidden" name="id" value="@order.Id" />
+	<input type="hidden" name="id" value="@Model.Id" />
 	<input type="submit" value="Submit Form" />
 </form>

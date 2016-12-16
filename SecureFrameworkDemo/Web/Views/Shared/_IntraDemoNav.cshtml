@@ -1,0 +1,42 @@
+﻿@model string
+@{ 
+	var currentController = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+
+	var links = new List<KeyValuePair<string, string>> {
+		new KeyValuePair<string, string>("Insecure", "Insecure"),
+		new KeyValuePair<string, string>("SecureFeature", "Secure Feature"),
+		new KeyValuePair<string, string>("SecureFramework", "Secure Framework")
+	};
+}
+
+<style type="text/css">
+	header > h2 { display: inline-block; }
+	header span.intra-demo-links { margin-left: 50px; }
+	header span.intra-demo-links span.active { font-weight: normal; }
+	header span.intra-demo-links > span:after { content: " | "; }
+	header span.intra-demo-links > span:last-child:after { content: ""; }
+</style>
+
+<header>
+	<h2>@ViewBag.Title</h2>
+	<span class="intra-demo-links">
+		(
+		@foreach (var linkPair in links) {
+			if (linkPair.Key == currentController) {
+				<span class="active">@linkPair.Value</span>
+			}
+			else {
+				var linkUrl = HttpContext.Current.Request.RawUrl.Replace(currentController, linkPair.Key);
+				<span><a href="@linkUrl">@linkPair.Value</a></span>
+			}
+		}
+		)
+	</span>
+	<span class="intra-demo-links" style="padding-left: 20px;">
+		(
+		<span>@Html.ActionLink("Order List", "OrderList", currentController)</span>
+		<span>@Html.ActionLink("Manage Orders", "ManageOrders", currentController)</span>
+		)
+	</span>
+</header>
+

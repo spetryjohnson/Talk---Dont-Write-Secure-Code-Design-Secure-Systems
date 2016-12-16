@@ -1,11 +1,21 @@
 ﻿@using SecureFrameworkDemo.Models;
+@model List<SecureFrameworkOrderViewModel>
 @{
-	ViewBag.Title = "Order List (Secure Framework)";
-
-	var orders = (IList<Order>)(ViewBag.Orders);
+	ViewBag.Title = "Order List - Secure Framework";
 }
 
-<h2>@ViewBag.Title</h2>
+@Html.Partial("_IntraDemoNav", "OrderList")
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		This page:
+		<ul>
+			<li>TODO: Access</li>
+			<li>Uses row-level security to restrict uses to their own data (<i>unless they have <b>ManageOrders</b> permission</i>)</li>
+			<li>Uses a PostSharp aspect to mask the SSN</li>
+		</ul>
+	</div>
+</div>
 
 <table class="table">
 	<tr>
@@ -15,12 +25,12 @@
 		<td>Customer SSN</td>
 		<td></td>
 	</tr>
-	@foreach (var order in orders) {
+	@foreach (var order in Model) {
 		<tr>
 			<td>@order.Id</td>
 			<td>@order.PlacedOn</td>
-			<td>@order.ApplicationUser.UserName</td>
-			<td>@order.ApplicationUser.SSN</td>
+			<td>@order.UserName</td>
+			<td>@order.SSN</td>
 			<td>@Html.ActionLink("View Details", "OrderDetail", "SecureFramework", new { id = order.Id }, null)</td>
 		</tr>
 	}

@@ -1,9 +1,15 @@
 ﻿@{
-    ViewBag.Title = "Manage Orders (Secure Feature)";
+	ViewBag.Title = "Manage Orders - Secure Feature";
 }
 
-<h2>@ViewBag.Title</h2>
+@Html.Partial("_IntraDemoNav", "ManageOrders")
 
-<p>
-	We only want people with the "ManageOrders" permission to see this page.
-</p>
+<div class="panel panel-default">
+	<div class="panel-body">
+		This page:
+		<ul>
+			<li>Manually implements the requirement that users have the <b>ManageOrders</b> permission</li>
+		</ul>
+	</div>
+</div>
+

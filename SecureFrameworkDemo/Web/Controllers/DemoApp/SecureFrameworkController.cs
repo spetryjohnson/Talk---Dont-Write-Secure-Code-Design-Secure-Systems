@@ -34,16 +34,24 @@ namespace SecureFrameworkDemo.Controllers {
 			return View();
 		}
 
+		/// <summary>
+		/// The row-level security feature means that the controller doesn't have to do any
+		/// special filtering here.
+		/// </summary>
 		public ActionResult OrderList() {
-			ViewBag.Orders = OrderSvc.GetAll().ToList();
+			var ordersUserCanAccess = OrderSvc.GetAll().ToList()
+				.Select(o => new SecureFrameworkOrderViewModel(o))
+				.ToList();
 
-			return View();
+			return View(ordersUserCanAccess);
 		}
 
 		public ActionResult OrderDetail(int id) {
-			ViewBag.Model = OrderSvc.GetByIdInsecure(id);
+			var model = new SecureFrameworkOrderViewModel(
+				OrderSvc.GetByIdInsecure(id)
+			);
 
-			return View();
+			return View(model);
 		}
 
 
@@ -72,5 +80,8 @@ namespace SecureFrameworkDemo.Controllers {
 			return RedirectToAction("OrderList", new { });
 		}
 
+		public ActionResult PublicAction() {
+			return View();
+		}
 	}
 }

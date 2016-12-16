@@ -249,6 +249,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApiKeys\ApiKey.cs" />
     <Compile Include="Models\ApiKeys\ApiKeyService.cs" />
+    <Compile Include="Models\Orders\SecureFrameworkOrderViewModel.cs" />
+    <Compile Include="Models\Orders\SecureFeatureOrderViewModel.cs" />
     <Compile Include="Models\Orders\OrderServiceInsecure.cs" />
     <Compile Include="Models\Users\ApplicationUser.cs" />
     <Compile Include="Models\Orders\GetOrderApiArgs.cs" />
@@ -321,7 +323,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\SecureFramework\__deleteme_ModifyOrder.cshtml" />
     <Content Include="Views\Insecure\OrderList.cshtml" />
     <Content Include="Views\Insecure\OrderDetail.cshtml" />
     <Content Include="Views\SecureFeature\OrderDetail.cshtml" />
@@ -335,6 +336,7 @@
     <Content Include="Views\SecureFramework\ManageOrders.cshtml" />
     <Content Include="Views\SecureFeature\Index.cshtml" />
     <Content Include="Views\SecureFramework\Index.cshtml" />
+    <Content Include="Views\Shared\_IntraDemoNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

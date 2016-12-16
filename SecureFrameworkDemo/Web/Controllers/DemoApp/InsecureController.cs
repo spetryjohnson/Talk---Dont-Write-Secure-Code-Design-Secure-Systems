@@ -33,20 +33,20 @@ namespace SecureFrameworkDemo.Controllers {
 		}
 
 		public ActionResult OrderList() {
-			ViewBag.Orders = OrderSvc
+			var model = OrderSvc
 				.GetAll().ToList()
 				.Select(x => new InsecureOrderViewModel(x))
 				.ToList();
 
-			return View();
+			return View(model);
 		}
 
 		public ActionResult OrderDetail(int id) {
-			ViewBag.Model = new InsecureOrderViewModel(
+			var model = new InsecureOrderViewModel(
 				OrderSvc.GetByIdInsecure(id)
 			);
 
-			return View();
+			return View(model);
 		}
 
 		[HttpPost]
@@ -55,6 +55,5 @@ namespace SecureFrameworkDemo.Controllers {
 			this.FlashSuccess("POST successful. (NOTE: No data were changed - haven't implemented any of that yet)");
 			return RedirectToAction("OrderList", new { });
 		}
-
 	}
 }

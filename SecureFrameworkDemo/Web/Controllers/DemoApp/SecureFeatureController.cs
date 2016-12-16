@@ -24,32 +24,74 @@ namespace SecureFrameworkDemo.Controllers {
 		}
 		private OrderService _orderSvc;
 
+		/// <summary>
+		/// The need for ONE action in this controller to be public means that we can't add [Authorize] at the controller
+		/// level and instead every other action, but this one, has to add [Authorize].
+		/// </summary>
 		public ActionResult Index() {
 			return View();
 		}
 
+		/// <summary>
+		/// Action implements manual permission check
+		/// </summary>
+		[Authorize]
 		public ActionResult ManageOrders() {
+			if (!CurrentUser.HasPermission(PermissionEnum.ManageOrders)) {
+				return new HttpUnauthorizedResult();
+			}
+
 			return View();
 		}
 
+		/// <summary>
+		/// Action implements its own access control checks.
+		/// </summary>
+		[Authorize]
 		public ActionResult OrderList() {
-			ViewBag.Orders = OrderSvc.GetAll().ToList();
+			var allOrders = OrderSvc.GetAll();
 
-			return View();
+			var filteredOrders = CurrentUser.HasPermission(PermissionEnum.ManageOrders)
+				? allOrders
+				: allOrders.Where(o => o.ApplicationUser.Id == CurrentUser.Id);
+
+			var viewModels = filteredOrders.ToList()
+				.Select(o => new SecureFeatureOrderViewModel(o, this.CurrentUser))
+				.ToList();
+
+			return View(viewModels);
 		}
 
+		/// <summary>
+		/// Action implements its own access control checks.
+		/// </summary>
+		[Authorize]
 		public ActionResult OrderDetail(int id) {
-			ViewBag.Model = OrderSvc.GetByIdInsecure(id);
+			var order = OrderSvc.GetByIdInsecure(id);
 
-			return View();
+			var isNotOwnedByCurrentUser = order.ApplicationUser.Id != CurrentUser.Id;
+			var userCannotSeeAllOrders = !CurrentUser.HasPermission(PermissionEnum.ManageOrders);
+
+			if (isNotOwnedByCurrentUser && userCannotSeeAllOrders) {
+				return new HttpUnauthorizedResult();
+			}
+
+			var model = new SecureFeatureOrderViewModel(order, CurrentUser);
+
+			return View(model);
 		}
 
+		/// <summary>
+		/// Must remember the [ValidateAntiForgeryToken] attribute or else the token, even if included, does
+		/// nothing to keep us secure.
+		/// </summary>
 		[HttpPost]
+		[Authorize]
+		[ValidateAntiForgeryToken]
 		public ActionResult ModifyOrder() {
 			// TODO: actually change something 
 			this.FlashSuccess("POST successful. (NOTE: No data were changed - haven't implemented any of that yet)");
 			return RedirectToAction("OrderList", new { });
 		}
-
 	}
 }

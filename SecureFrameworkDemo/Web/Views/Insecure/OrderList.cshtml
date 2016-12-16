@@ -1,11 +1,21 @@
 ﻿@using SecureFrameworkDemo.Models;
+@model List<InsecureOrderViewModel>
 @{
-	ViewBag.Title = "Order List (Insecure)";
-
-	var orders = (IList<InsecureOrderViewModel>)(ViewBag.Orders);
+	ViewBag.Title = "Order List - Insecure";
 }
 
-<h2>@ViewBag.Title</h2>
+@Html.Partial("_IntraDemoNav", "OrderList")
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		This page:
+		<ul>
+			<li>Is available anonymously</li>
+			<li>Shows the entire order list to all users</li>
+			<li>Does not restrict access to the SSN</li>
+		</ul>
+	</div>
+</div>
 
 <table class="table">
 	<tr>
@@ -15,7 +25,7 @@
 		<td>Customer SSN</td>
 		<td></td>
 	</tr>
-	@foreach (var order in orders) {
+	@foreach (var order in Model) {
 		<tr>
 			<td>@order.Id</td>
 			<td>@order.PlacedOn</td>

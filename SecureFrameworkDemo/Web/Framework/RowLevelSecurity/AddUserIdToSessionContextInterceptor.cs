@@ -20,13 +20,14 @@ namespace SecureFrameworkDemo.Framework.RowLevelSecurity {
 				var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
 				if (userId != null) {
-					DbCommand cmd = connection.CreateCommand();
-					cmd.CommandText = "EXEC sp_set_session_context @key=N'UserId', @value=@UserId";
-					DbParameter param = cmd.CreateParameter();
-					param.ParameterName = "@UserId";
-					param.Value = userId;
-					cmd.Parameters.Add(param);
-					cmd.ExecuteNonQuery();
+					// temporarily removed while working on insecure setuff
+					//DbCommand cmd = connection.CreateCommand();
+					//cmd.CommandText = "EXEC sp_set_session_context @key=N'UserId', @value=@UserId";
+					//DbParameter param = cmd.CreateParameter();
+					//param.ParameterName = "@UserId";
+					//param.Value = userId;
+					//cmd.Parameters.Add(param);
+					//cmd.ExecuteNonQuery();
 				}
 			}
 			catch (System.NullReferenceException) {

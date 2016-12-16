@@ -1,11 +1,21 @@
 ﻿@using SecureFrameworkDemo.Models;
+@model List<SecureFeatureOrderViewModel>
 @{
-	ViewBag.Title = "Order List (Secure Feature)";
-
-	var orders = (IList<Order>)(ViewBag.Orders);
+	ViewBag.Title = "Order List - Secure Feature";
 }
 
-<h2>@ViewBag.Title</h2>
+@Html.Partial("_IntraDemoNav", "OrderList")
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		This page:
+		<ul>
+			<li>Uses [Authorize] to prevent anonymous access</li>
+			<li>Controller manually filters the list of orders (<i>users without <b>ManageOrders</b> permission only see their own data</i>)</li>
+			<li>View model manually masks the SSN</li>
+		</ul>
+	</div>
+</div>
 
 <table class="table">
 	<tr>
@@ -15,12 +25,12 @@
 		<td>Customer SSN</td>
 		<td></td>
 	</tr>
-	@foreach (var order in orders) {
+	@foreach (var order in Model) {
 		<tr>
 			<td>@order.Id</td>
 			<td>@order.PlacedOn</td>
-			<td>@order.ApplicationUser.UserName</td>
-			<td>@order.ApplicationUser.SSN</td>
+			<td>@order.UserName</td>
+			<td>@order.SSN</td>
 			<td>@Html.ActionLink("View Details", "OrderDetail", "SecureFeature", new { id = order.Id }, null)</td>
 		</tr>
 	}
