@@ -6,59 +6,49 @@
     <h1>Secure Features Demo</h1>
 	<p>This demo shows a simple set of features where the security concerns are handled in application level code.</p>
 	<p>Compare the code in the <b>SecureFeatureController</b> and related views to the other controllers.</p>
+	<p><a class="btn btn-default" href="@Url.Action("OrderList", "SecureFeature")">Begin &raquo;</a></p>
 </div>
 
 <div class="row">
 	<div class="col-md-4">
-		<h2>Prevent Anonymous Access</h2>
+		<h2>Anonymous Access</h2>
 		<p>
 			The <b>[Authorize]</b> attribute is added to actions or controllers that require a login. This index 
 			page is the only thing accessible anonymously.
 		</p>
-		<p>
-			<a class="btn btn-default" href="@Url.Action("OrderList", "SecureFeature")">Go To Private Page &raquo;</a>
-		</p>
 	</div>
 	<div class="col-md-4">
-		<h2>Permissions</h2>
+		<h2>Authorization</h2>
 		<p>
-			The "Manage Orders" action does an explicit permissions check.
+			The "Manage Orders" action does an explicit permissions check in app code.
 		</p>
-		<p><a class="btn btn-default" href="@Url.Action("ManageOrders", "SecureFeature")">Show Me &raquo;</a></p>
 	</div>
 	<div class="col-md-4">
 		<h2>Access Control</h2>
 		<p>
-			TODO
-			Nothing in this demo prevents one user from viewing data for another user. Log in as <b>user1@example.com</b>
-			and you can still see stuff for user2.
+			The "Order List" and "Order Detail" actions both contain explicit checks, in app code, that prevent users
+			from seeing orders they don't own, unless they have the <b>ManageOrders</b> permission.
 		</p>
-		<p><a class="btn btn-default" href="@Url.Action("OrderList", "SecureFeature")">Show Me &raquo;</a></p>
 	</div>
 </div>
 <div class="row">
 	<div class="col-md-4">
-		<h2>Masked Values</h2>
+		<h2>Sensitive Data</h2>
 		<p>
-			The view model implements a permission check, which means the view model needs to know about the current user.
+			The view model does an explicit permission check before un-masking the SSN, which means the view model needs to know about the current user.
 		</p>
-		<p><a class="btn btn-default" href="@Url.Action("OrderList", "SecureFeature")">Show Me &raquo;</a></p>
 	</div>
 	<div class="col-md-4">
-		<h2>Encrypted Values</h2>
+		<h2>Encryption</h2>
 		<p>
 			TODO
-			Credit card numbers are stored in plain text in this insecure demo.
 		</p>
-		<p><a class="btn btn-default" href="@Url.Action("OrderList", "SecureFeature")">Show Me &raquo;</a></p>
 	</div>
 	<div class="col-md-4">
 		<h2>Anti-CSRF</h2>
 		<p>
-			TODO
-			Nothing in the insecure demo prevents CSRF. Use the CSRF Attacker app (separate proj in this repo) to attack
-			this website.
+			The "Order Detail" page includes the standard ASPNET anti-forgery token, and the corresponding MVC action validates it using the [ValidateAntiForgeryToken]
+			attribute.
 		</p>
-		<p><a class="btn btn-default" href="@Url.Action("OrderDetail", "Insecure", new { id = 1 })">Go To Unprotected Page &raquo;</a></p>
 	</div>
 </div>
