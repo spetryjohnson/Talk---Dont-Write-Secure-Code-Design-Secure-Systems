@@ -21,6 +21,13 @@ namespace SecureFrameworkDemo.Framework.RowLevelSecurity {
 				return;
 			}
 
+			// If no user is logged in, leave SESSION_CONTEXT null and all rows will be returned
+			var isLoggedIn = (HttpContext.Current != null) && HttpContext.Current.User.Identity.IsAuthenticated;
+
+			if (!isLoggedIn) {
+				return;
+			}
+
 			// HACK FOR DEMO APP: Need to disable this for the "insecure" and "secure feature" areas of the site.
 			// This demonstrates that secure frameworks are all about making it SECURE BY DEFAULT, and then requiring
 			// extra effort to be INSECURE, which should be the non-common case. 
@@ -32,21 +39,16 @@ namespace SecureFrameworkDemo.Framework.RowLevelSecurity {
 			// Set SESSION_CONTEXT to current UserId whenever EF opens a connection
 			// There are table-level predicates defined during the EF Migrations that look for
 			// this value and, if present, implement whatever logic is necessary
-			try {
-				var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+			var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
-				if (userId != null) {
-					DbCommand cmd = connection.CreateCommand();
-					cmd.CommandText = "EXEC sp_set_session_context @key=N'UserId', @value=@UserId";
-					DbParameter param = cmd.CreateParameter();
-					param.ParameterName = "@UserId";
-					param.Value = userId;
-					cmd.Parameters.Add(param);
-					cmd.ExecuteNonQuery();
-				}
-			}
-			catch (System.NullReferenceException) {
-				// If no user is logged in, leave SESSION_CONTEXT null (all rows will be filtered)
+			if (userId != null) {
+				DbCommand cmd = connection.CreateCommand();
+				cmd.CommandText = "EXEC sp_set_session_context @key=N'UserId', @value=@UserId";
+				DbParameter param = cmd.CreateParameter();
+				param.ParameterName = "@UserId";
+				param.Value = userId;
+				cmd.Parameters.Add(param);
+				cmd.ExecuteNonQuery();
 			}
 		}
 
