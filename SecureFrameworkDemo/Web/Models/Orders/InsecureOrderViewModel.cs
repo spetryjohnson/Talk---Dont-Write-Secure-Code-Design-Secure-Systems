@@ -7,17 +7,24 @@ using Microsoft.Owin.Security;
 
 namespace SecureFrameworkDemo.Models {
 
-	public class ViewOrderModel {
+	/// <summary>
+	/// View model for an Order.
+	/// 
+	/// This is the insecure version - it doesn't do any security restrictions.
+	/// </summary>
+	public class InsecureOrderViewModel {
 		public int Id { get; set; }
 		public DateTime PlacedOn { get; set; }
-		public string CustomerUserName { get; set; }
+		public string UserName { get; set; }
+		public string SSN { get; set; }
 
-		public ViewOrderModel(Order o) {
+		public InsecureOrderViewModel(Order o) {
 			Contract.Requires(o != null);
 
 			Id = o.Id;
 			PlacedOn = o.PlacedOn;
-			CustomerUserName = o.ApplicationUser.UserName;
+			UserName = o.ApplicationUser.UserName;
+			SSN = o.ApplicationUser.SSN;
 		}
 	}
 }

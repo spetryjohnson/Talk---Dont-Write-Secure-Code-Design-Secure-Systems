@@ -252,7 +252,7 @@
     <Compile Include="Models\Orders\OrderServiceInsecure.cs" />
     <Compile Include="Models\Users\ApplicationUser.cs" />
     <Compile Include="Models\Orders\GetOrderApiArgs.cs" />
-    <Compile Include="Models\Orders\OrderViewModels.cs" />
+    <Compile Include="Models\Orders\InsecureOrderViewModel.cs" />
     <Compile Include="Models\Orders\Order.cs" />
     <Compile Include="Models\Permissions\Permission.cs" />
     <Compile Include="Models\Permissions\PermissionEnum.cs" />

@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Order Details (Insecure)";
 
-	var order = (Order)ViewBag.Model;
+	var order = (InsecureOrderViewModel)ViewBag.Model;
 }
 <h2>@ViewBag.Title</h2>
 
@@ -14,7 +14,7 @@
 	</tr>
 	<tr>
 		<td>Customer:</td>
-		<td>@order.ApplicationUser.UserName (@order.ApplicationUser.SSN)</td>
+		<td>@order.UserName (@order.SSN)</td>
 	</tr>
 </table>
 

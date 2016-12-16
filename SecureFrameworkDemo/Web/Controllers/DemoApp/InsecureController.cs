@@ -33,13 +33,18 @@ namespace SecureFrameworkDemo.Controllers {
 		}
 
 		public ActionResult OrderList() {
-			ViewBag.Orders = OrderSvc.GetAll().ToList();
+			ViewBag.Orders = OrderSvc
+				.GetAll().ToList()
+				.Select(x => new InsecureOrderViewModel(x))
+				.ToList();
 
 			return View();
 		}
 
 		public ActionResult OrderDetail(int id) {
-			ViewBag.Model = OrderSvc.GetByIdInsecure(id);
+			ViewBag.Model = new InsecureOrderViewModel(
+				OrderSvc.GetByIdInsecure(id)
+			);
 
 			return View();
 		}

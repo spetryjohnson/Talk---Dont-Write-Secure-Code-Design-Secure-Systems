@@ -2,7 +2,7 @@
 @{
 	ViewBag.Title = "Order List (Insecure)";
 
-	var orders = (IList<Order>)(ViewBag.Orders);
+	var orders = (IList<InsecureOrderViewModel>)(ViewBag.Orders);
 }
 
 <h2>@ViewBag.Title</h2>
@@ -19,8 +19,8 @@
 		<tr>
 			<td>@order.Id</td>
 			<td>@order.PlacedOn</td>
-			<td>@order.ApplicationUser.UserName</td>
-			<td>@order.ApplicationUser.SSN</td>
+			<td>@order.UserName</td>
+			<td>@order.SSN</td>
 			<td>@Html.ActionLink("View Details", "OrderDetail", "Insecure", new { id = order.Id }, null)</td>
 		</tr>
 	}
