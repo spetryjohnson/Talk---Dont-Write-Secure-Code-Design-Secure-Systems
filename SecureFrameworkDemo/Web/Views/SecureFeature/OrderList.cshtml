@@ -1,16 +1,13 @@
 ﻿@using SecureFrameworkDemo.Models;
-@using Santhos.Web.Mvc.BootstrapFlashMessages;
 @{
 	ViewBag.Title = "Order List (Secure Feature)";
 
 	var orders = (IList<Order>)(ViewBag.Orders);
 }
 
-@Html.FlashMessages(true)
-
 <h2>@ViewBag.Title</h2>
 
-<table>
+<table class="table">
 	<tr>
 		<td>Id</td>
 		<td>Placed On</td>

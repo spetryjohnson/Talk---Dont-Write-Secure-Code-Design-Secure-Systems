@@ -1,0 +1,61 @@
+﻿@{
+	ViewBag.Title = "Secure Framework Demo - Home";
+}
+
+<div class="jumbotron">
+	<h1>Secure Framework Demo</h1>
+	<p>
+		This demo shows a simple set of features where the security concerns are all handled in framework code, leaving
+		the app code free to deal with functional requirements.
+	</p>
+	<p>Compare the code in the <b>SecureFrameworkController</b> and related views to the other controllers.</p>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<h2>Anonymous Access</h2>
+		<p>
+			Nothing in this demo prevents anonymous users from using the site.
+		</p>
+		<p><a class="btn btn-default" href="@Url.Action("OrderList", "Insecure")">Show Me &raquo;</a></p>
+	</div>
+	<div class="col-md-4">
+		<h2>Permissions</h2>
+		<p>
+			The "Manage Orders" page <i>should</i> do a permission check, but in the insecure demo it doesn't.
+		</p>
+		<p><a class="btn btn-default" href="@Url.Action("ManageOrders", "Insecure")">Show Me &raquo;</a></p>
+	</div>
+	<div class="col-md-4">
+		<h2>Access Control</h2>
+		<p>
+			Nothing in this demo prevents one user from viewing data for another user. Log in as <b>user1@example.com</b>
+			and you can still see stuff for user2.
+		</p>
+		<p><a class="btn btn-default" href="@Url.Action("OrderList", "Insecure")">Show Me &raquo;</a></p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<h2>Masked Values</h2>
+		<p>
+			Nothing in the insecure demo prevents users from viewing the raw SSN stored in the database.
+		</p>
+		<p><a class="btn btn-default" href="@Url.Action("OrderList", "Insecure")">Show Me &raquo;</a></p>
+	</div>
+	<div class="col-md-4">
+		<h2>Encrypted Values</h2>
+		<p>
+			Credit card numbers are stored in plain text in this insecure demo.
+		</p>
+		<p><a class="btn btn-default" href="@Url.Action("OrderList", "Insecure")">Show Me &raquo;</a></p>
+	</div>
+	<div class="col-md-4">
+		<h2>Anti-CSRF</h2>
+		<p>
+			Nothing in the insecure demo prevents CSRF. Use the CSRF Attacker app (separate proj in this repo) to attack
+			this website.
+		</p>
+		<p><a class="btn btn-default" href="@Url.Action("OrderDetail", "Insecure", new { id = 1 })">Go To Unprotected Page &raquo;</a></p>
+	</div>
+</div>

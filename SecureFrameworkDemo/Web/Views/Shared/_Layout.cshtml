@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Santhos.Web.Mvc.BootstrapFlashMessages;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,15 +22,17 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Insecure Demo", "OrderList", "Insecure")</li>
-					<li>@Html.ActionLink("Secure Feature Demo", "OrderList", "SecureFeature")</li>
-					<li>@Html.ActionLink("Secure Framework Demo", "OrderList", "SecureFramework")</li>
+                    <li>@Html.ActionLink("Insecure Demo", "Index", "Insecure")</li>
+					<li>@Html.ActionLink("Secure Feature Demo", "Index", "SecureFeature")</li>
+					<li>@Html.ActionLink("Secure Framework Demo", "Index", "SecureFramework")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
+		@Html.Partial("_LoggedInUserSummary")
+		@Html.FlashMessages(true)
         @RenderBody()
         <hr />
         <footer>

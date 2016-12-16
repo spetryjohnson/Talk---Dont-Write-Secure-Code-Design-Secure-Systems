@@ -13,6 +13,12 @@ namespace SecureFrameworkDemo.Models {
 
 		public virtual ICollection<Permission> Permissions { get; set; }
 
+		public virtual ICollection<PermissionEnum> PermissionEnums {
+			get {
+				return Permissions.Select(x => x.Id).Cast<PermissionEnum>().ToList();
+			}
+		}
+
 		[MaskedValue(PermissionEnum.ViewSSN)]
 		public string SSN { get; set; }
 

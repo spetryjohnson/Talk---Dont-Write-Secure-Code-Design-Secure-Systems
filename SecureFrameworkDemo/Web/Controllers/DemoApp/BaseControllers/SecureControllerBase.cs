@@ -25,6 +25,8 @@ namespace SecureFrameworkDemo.Controllers {
 				context.Result = new HttpUnauthorizedResult();
 				return;
 			}
+
+			base.OnActionExecuting(context);
 		}
 	}
 }

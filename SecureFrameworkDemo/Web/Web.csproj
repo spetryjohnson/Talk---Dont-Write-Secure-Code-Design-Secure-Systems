@@ -204,6 +204,7 @@
     <Compile Include="Controllers\DemoApp\BaseControllers\SecureControllerBase.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiRequestBase.cs" />
     <Compile Include="Framework\ApiAuthentication\BearerTokenAuthorizationAttribute.cs" />
+    <Compile Include="Framework\MvcViews\RazorViewBase.cs" />
     <Compile Include="Framework\WebPageAuthentication\RequiredPermissionAttribute.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiKeyRequestParams.cs" />
     <Compile Include="Framework\RowLevelSecurity\AddUserIdToSessionContextInterceptor.cs" />
@@ -327,6 +328,13 @@
     <Content Include="Views\SecureFeature\OrderList.cshtml" />
     <Content Include="Views\SecureFramework\OrderDetail.cshtml" />
     <Content Include="Views\SecureFramework\OrderList.cshtml" />
+    <Content Include="Views\Insecure\Index.cshtml" />
+    <Content Include="Views\Insecure\ManageOrders.cshtml" />
+    <Content Include="Views\Shared\_LoggedInUserSummary.cshtml" />
+    <Content Include="Views\SecureFeature\ManageOrders.cshtml" />
+    <Content Include="Views\SecureFramework\ManageOrders.cshtml" />
+    <Content Include="Views\SecureFeature\Index.cshtml" />
+    <Content Include="Views\SecureFramework\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

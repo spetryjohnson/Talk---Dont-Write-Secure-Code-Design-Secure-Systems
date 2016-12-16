@@ -24,6 +24,14 @@ namespace SecureFrameworkDemo.Controllers {
 		}
 		private OrderService _orderSvc;
 
+		public ActionResult Index() {
+			return View();
+		}
+
+		public ActionResult ManageOrders() {
+			return View();
+		}
+
 		public ActionResult OrderList() {
 			ViewBag.Orders = OrderSvc.GetAll().ToList();
 

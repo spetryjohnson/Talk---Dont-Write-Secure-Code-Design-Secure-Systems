@@ -30,7 +30,7 @@ namespace SecureFrameworkDemo.Models {
 		public Order GetByIdSecure(int orderId, ApplicationUser activeUser) {
 			var order = GetByIdInsecure(orderId);
 
-			var cannotViewOrdersForOthers = !activeUser.HasPermission(PermissionEnum.ViewOrdersForOthers);
+			var cannotViewOrdersForOthers = !activeUser.HasPermission(PermissionEnum.ManageOrders);
 			var isNotViewingOwnOrder = (order.ApplicationUser.UserName != activeUser.UserName);	// CAREFUL w/ EQUALITY CHECK
 
 			if (isNotViewingOwnOrder && cannotViewOrdersForOthers) {

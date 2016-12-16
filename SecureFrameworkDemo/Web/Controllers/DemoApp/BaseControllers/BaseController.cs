@@ -41,5 +41,11 @@ namespace SecureFrameworkDemo.Controllers {
 			set { _dbContext = value; }
 		}
 		private ApplicationDbContext _dbContext;
+
+		protected override void OnActionExecuting(ActionExecutingContext context) {
+			ViewData["Framework_CurrentUser"] = this.CurrentUser;
+
+			base.OnActionExecuting(context);
+		}
 	}
 }

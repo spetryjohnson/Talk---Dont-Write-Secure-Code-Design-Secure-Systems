@@ -30,20 +30,14 @@ namespace SecureFrameworkDemo.Migrations {
 
 			// CREATE PERMISSIONS
 			var PERM_BASIC_PRIVS = new Permission { Id = (int)PermissionEnum.BasicPrivileges, Name = "Basic Privileges" };
-			var PERM_MANAGE_PRODS = new Permission { Id = (int)PermissionEnum.ManageProducts, Name = "Manage Products" };
-			var PERM_MANAGE_USERS = new Permission { Id = (int)PermissionEnum.ManageUsers, Name = "Manage Users" };
-			var PERM_VIEW_ORDERS = new Permission { Id = (int)PermissionEnum.ViewOrdersForOthers, Name = "View Orders for Others" };
-			var PERM_VIEW_PAYMENT = new Permission { Id = (int)PermissionEnum.ViewCreditCard, Name = "View Credit Card #" };
+			var PERM_MANAGE_ORDERS = new Permission { Id = (int)PermissionEnum.ManageOrders, Name = "Manage Orders" };
 			var PERM_VIEW_SSN = new Permission { Id = (int)PermissionEnum.ViewSSN, Name = "View SSN" };
 			var PERM_API_VIEW_ORDERS = new Permission { Id = (int)PermissionEnum.API_ViewOrders, Name = "API: View Orders" };
 
 			context.Permissions.AddOrUpdate(
 				p => p.Id,
 				PERM_BASIC_PRIVS,
-				PERM_MANAGE_PRODS,
-				PERM_MANAGE_USERS,
-				PERM_VIEW_ORDERS,
-				PERM_VIEW_PAYMENT,
+				PERM_MANAGE_ORDERS,
 				PERM_VIEW_SSN,
 				PERM_API_VIEW_ORDERS
 			);
@@ -53,20 +47,23 @@ namespace SecureFrameworkDemo.Migrations {
 				new UserStore<ApplicationUser>(context)
 			);
 
+			// admin user has all perms
 			var adminUser = new ApplicationUser {
 				UserName = "admin@example.com",
-				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_PRODS, PERM_MANAGE_USERS, PERM_VIEW_ORDERS, PERM_VIEW_PAYMENT, PERM_VIEW_SSN },
+				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_ORDERS, PERM_VIEW_SSN },
 				SSN = "111-11-1111"
 			};
 			userManager.Create(adminUser, "Passw0rd");
 
+			// restricted admin can manage orders, but not see SSN
 			var restrictedAdmin = new ApplicationUser {
 				UserName = "restrictedAdmin@example.com",
-				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_PRODS, PERM_MANAGE_USERS, PERM_VIEW_ORDERS },
+				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_ORDERS },
 				SSN = "222-22-2222"
 			};
 			userManager.Create(restrictedAdmin, "Passw0rd");
 
+			// normal users can see their own orders only
 			var user1 = new ApplicationUser {
 				UserName = "user1@example.com",
 				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS },
