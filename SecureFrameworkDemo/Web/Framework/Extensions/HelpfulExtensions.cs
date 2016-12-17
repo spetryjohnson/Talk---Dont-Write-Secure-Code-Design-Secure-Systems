@@ -5,6 +5,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace SecureFrameworkDemo.Framework {
@@ -66,6 +67,73 @@ namespace SecureFrameworkDemo.Framework {
 			return (joinedString.Length == 0)
 				? ""
 				: joinedString.Substring(delimiter.Length);
+		}
+
+		/// <summary>
+		/// Returns TRUE if the string is a match for the specified regular expression. 
+		/// </summary>
+		/// <param name="regex">May be specified in .NET style [just the pattern], or in Perl style like "/foo/i"</param>
+		public static bool MatchesRegex(this string val, string regex) {
+			return val.MatchesRegex(regex, RegexOptions.None);
+		}
+
+		/// <summary>
+		/// Returns TRUE if the string is a match for the specified regular expression. 
+		/// </summary>
+		/// <param name="regex">May be specified in .NET style [just the pattern], or in Perl style like "/foo/i"</param>
+		public static bool MatchesRegex(this string val, string regex, RegexOptions options) {
+			MatchCollection ignored;
+
+			return val.MatchesRegex(regex, options, out ignored);
+		}
+
+		/// <summary>
+		/// Returns TRUE if the string is a match for the specified regular expression. Any matches
+		/// are returned using an out parameter.
+		/// </summary>
+		/// <param name="regex">May be specified in .NET style [just the pattern], or in Perl style like "/foo/i"</param>
+		public static bool MatchesRegex(this string val, string regex, out MatchCollection matches) {
+			return val.MatchesRegex(regex, RegexOptions.None, out matches);
+		}
+
+		/// <summary>
+		/// Returns TRUE if the string is a match for the specified regular expression. Any matches
+		/// are returned using an out parameter.
+		/// </summary>
+		/// <param name="regex">May be specified in .NET style [just the pattern], or in Perl style like "/foo/i"</param>
+		public static bool MatchesRegex(this string val, string regex, RegexOptions options, out MatchCollection matches) {
+			if (val == null) {
+				matches = null;
+				return false;
+			}
+
+			var parsedRegex = RegexParser.Parse(regex, options);
+
+			matches = parsedRegex.Matches(val);
+
+			return matches.Count > 0;
+		}
+
+		/// <summary>
+		/// Returns true if the string is a case-insensitive match for the specified regular 
+		/// expression. 
+		/// </summary>
+		public static bool MatchesRegexIgnoringCase(this string val, string regex) {
+			return Regex.IsMatch(val, regex, RegexOptions.IgnoreCase);
+		}
+
+		/// <summary>
+		/// Splits a string into an array using the specified string as the delimiter. This is 
+		/// syntactic sugar for String.Split(), but allows the delimiter to be passed as a string
+		/// instance rather than a character array.
+		/// </summary>
+		public static string[] Split(this string val, string singleCharacterDelimiter) {
+			Contract.Requires(singleCharacterDelimiter.Length == 1, "The delimiter must be a single character.");
+
+			if (String.IsNullOrEmpty(val))
+				return new string[0];
+
+			return val.Split(singleCharacterDelimiter.ToCharArray());
 		}
 
 		/// <summary>

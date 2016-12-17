@@ -204,6 +204,7 @@
     <Compile Include="Controllers\DemoApp\BaseControllers\SecureControllerBase.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiRequestBase.cs" />
     <Compile Include="Framework\ApiAuthentication\BearerTokenAuthorizationAttribute.cs" />
+    <Compile Include="Framework\Extensions\RegexParser.cs" />
     <Compile Include="Framework\MvcViews\RazorViewBase.cs" />
     <Compile Include="Framework\WebPageAuthentication\RequiredPermissionAttribute.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiKeyRequestParams.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Framework\Extensions\HelpfulExtensions.cs" />
     <Compile Include="Framework\PropertyAccessAuthorization\MaskedValueAttribute.cs" />
     <Compile Include="Framework\PropertyAccessAuthorization\UserAwarePropertyInterceptor.cs" />
+    <Compile Include="Framework\WebPageAuthentication\CustomAuthenticationSection.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

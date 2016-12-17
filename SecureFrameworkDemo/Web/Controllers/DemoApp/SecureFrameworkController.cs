@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using SecureFrameworkDemo.Models;
 using static Santhos.Web.Mvc.BootstrapFlashMessages.FlashControllerExtensions;
-
+using SecureFrameworkDemo.Framework.WebPageAuthentication;
 
 namespace SecureFrameworkDemo.Controllers {
 
@@ -15,8 +15,11 @@ namespace SecureFrameworkDemo.Controllers {
 	/// 2) Prevents a logged-in user from seeing someone else's data (using secure data access calls
 	///    plus Row Level Security)
 	/// 3) Masks user SSNs (using PostSharp)
+	/// 
+	/// Instead of app-level security code, this controller DOES need to inherit from a specific
+	/// base controller. (That's the trade-off versus using attributes)
 	/// </summary>
-	public class SecureFrameworkController : BaseController {
+	public class SecureFrameworkController : SecureControllerBase {
 
 		protected OrderService OrderSvc {
 			get {
@@ -30,6 +33,7 @@ namespace SecureFrameworkDemo.Controllers {
 			return View();
 		}
 
+		[RequiredPermission(PermissionEnum.ManageOrders)]
 		public ActionResult ManageOrders() {
 			return View();
 		}
@@ -53,7 +57,6 @@ namespace SecureFrameworkDemo.Controllers {
 
 			return View(model);
 		}
-
 
 		/// <summary>
 		/// Demonstrates techniques for building ANTI-CSRF tokens into the framework.
