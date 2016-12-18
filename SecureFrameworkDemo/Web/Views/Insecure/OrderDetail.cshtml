@@ -36,3 +36,30 @@
 	<input type="hidden" name="id" value="@Model.Id" />
 	<input type="submit" value="Submit Form" />
 </form>
+
+
+<h3>AJAX Form Post</h3>
+<p>
+	Click this button to initiate an AJAX form post. (For testing CSRF stuff)
+</p>
+<input id="btnSubmitAjax" type="button" value="Submit AJAX" />
+<script type="text/javascript">
+	$(function () {
+		$("#btnSubmitAjax").on("click", function () {
+			$.ajax({
+				url: "@Url.Action("ModifyOrderAjax", "Insecure")",
+				type: "POST",
+				data: {
+					"orderId": @Model.Id
+				},
+				dataType: "json",
+				success: function(data) {
+					alert(JSON.stringify(data));
+				},
+				error: function(data) {
+					alert("Form post failed");
+				}
+			});
+		});
+	});
+</script>

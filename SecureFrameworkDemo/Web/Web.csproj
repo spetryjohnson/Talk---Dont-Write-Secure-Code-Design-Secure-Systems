@@ -202,6 +202,7 @@
     <Compile Include="Controllers\DemoApp\BaseControllers\BaseController.cs" />
     <Compile Include="Controllers\DemoAPI\APIController.cs" />
     <Compile Include="Controllers\DemoApp\BaseControllers\SecureControllerBase.cs" />
+    <Compile Include="Framework\AntiCSRF\ValidateAntiForgeryTokenAjax.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiRequestBase.cs" />
     <Compile Include="Framework\ApiAuthentication\BearerTokenAuthorizationAttribute.cs" />
     <Compile Include="Framework\Extensions\RegexParser.cs" />

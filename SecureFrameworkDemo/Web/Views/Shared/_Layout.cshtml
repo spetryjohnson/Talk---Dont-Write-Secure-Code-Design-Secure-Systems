@@ -7,7 +7,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+	@Scripts.Render("~/bundles/jquery")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -40,7 +40,6 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
@@ -56,6 +55,26 @@
 	</div>
 	<script type="text/javascript">
 		$(function () {
+			// globally add the request verification token to all AJAX POSTs 
+			$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+
+				// HACK: Only doing this for the "SecureFramework" endpoints, so as not to interfere with
+				// other examples
+				var isSecureFrameworkArea = originalOptions.url.search(/SecureFramework/i) != -1;
+				if (!isSecureFrameworkArea) {
+					return;
+				}
+
+				if (originalOptions.type !== 'POST' || options.type !== 'POST') {
+					return;
+				}
+				
+				options.data = $.param($.extend({}, originalOptions.data, {
+					"__RequestVerificationToken": $("#AntiForgeryToken > input").val()
+				}));
+			});
+
+			// globally add the token to all FORM POSTs
 			$("form").each(function () {
 				var form = $(this);
 				var alreadyHasToken = form.find("input[name='__RequestVerificationToken']").length > 0;

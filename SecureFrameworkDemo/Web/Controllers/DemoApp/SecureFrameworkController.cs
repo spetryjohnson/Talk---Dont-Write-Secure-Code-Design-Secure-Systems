@@ -83,8 +83,14 @@ namespace SecureFrameworkDemo.Controllers {
 			return RedirectToAction("OrderList", new { });
 		}
 
-		public ActionResult PublicAction() {
-			return View();
+		/// <summary>
+		/// Just like with a normal POST, all CSRF stuff is handled in the case controller automatically
+		/// </summary>
+		[HttpPost]
+		public ActionResult ModifyOrderAjax(int orderId) {
+			return Json(new {
+				message = $"POST successful for ID: {orderId}"
+			});
 		}
 	}
 }

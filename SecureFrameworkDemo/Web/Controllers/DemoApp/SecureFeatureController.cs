@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using SecureFrameworkDemo.Models;
+using SecureFrameworkDemo.Framework.AntiCSRF;
 using static Santhos.Web.Mvc.BootstrapFlashMessages.FlashControllerExtensions;
-
 
 namespace SecureFrameworkDemo.Controllers {
 
@@ -92,6 +92,18 @@ namespace SecureFrameworkDemo.Controllers {
 			// TODO: actually change something 
 			this.FlashSuccess("POST successful. (NOTE: No data were changed - haven't implemented any of that yet)");
 			return RedirectToAction("OrderList", new { });
+		}
+
+		/// <summary>
+		/// We can use the standard [ValidateAntiForgeryToken] as long as each AJAX call is manually modified to 
+		/// include a validation token. See the "AddAntiForgeryToken" JS function.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]		
+		public ActionResult ModifyOrderAjax(int orderId) {
+			return Json(new {
+				message = $"POST successful for ID: {orderId}"
+			});
 		}
 	}
 }

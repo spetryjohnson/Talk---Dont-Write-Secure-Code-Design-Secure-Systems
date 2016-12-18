@@ -55,5 +55,12 @@ namespace SecureFrameworkDemo.Controllers {
 			this.FlashSuccess("POST successful. (NOTE: No data were changed - haven't implemented any of that yet)");
 			return RedirectToAction("OrderList", new { });
 		}
+
+		[HttpPost]
+		public ActionResult ModifyOrderAjax(int orderId) {
+			return Json(new {
+				message = $"POST successful for ID: {orderId}"
+			});
+		}
 	}
 }

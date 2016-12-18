@@ -47,19 +47,40 @@
 		</tr>*@
 		<tr>
 			<td></td>
-			<td><input type="submit" value="send attack" /></td>
+			<td>
+				<input type="submit" value="Attack normal POST" />
+				<input type="button" value="Attack using AJAX" id="btnAttackAJAX" />
+			</td>
 		</tr>
 	</table>
 </form>
 
 <script type="text/javascript">
 	$(function () {
+		var host = $("#AttackHostInput").val();
+		var area = $("input[name='area']:checked").val();
+
 		$("#CSRFForm").on("submit", function () {
 			var form = $(this)[0];
-			var host = $("#AttackHostInput").val();
-			var area = $("input[name='area']:checked").val();
-
 			form.action = host + "/" + area + "/ModifyOrder";
 		})
+
+		$("#btnAttackAJAX").on("click", function () {
+			$.ajax({
+				url: host + "/" + area + "/ModifyOrderAjax",
+				type: "POST",
+			data: {
+				"orderId": 1
+			},
+			dataType: "json",
+			success: function(data) {
+				alert(JSON.stringify(data));
+			},
+			error: function(data) {
+				alert("Form post failed");
+			}
+		});
+
+		});
 	});
 </script>
