@@ -11,7 +11,7 @@
 
 <style type="text/css">
 	header > h2 { display: inline-block; }
-	header span.intra-demo-links { margin-left: 50px; }
+	header span.intra-demo-links { margin-left: 20px; }
 	header span.intra-demo-links span.active { font-weight: normal; }
 	header span.intra-demo-links > span:after { content: " | "; }
 	header span.intra-demo-links > span:last-child:after { content: ""; }
@@ -32,10 +32,11 @@
 		}
 		)
 	</span>
-	<span class="intra-demo-links" style="padding-left: 20px;">
+	<span class="intra-demo-links">
 		(
 		<span>@Html.ActionLink("Order List", "OrderList", currentController)</span>
 		<span>@Html.ActionLink("Manage Orders", "ManageOrders", currentController)</span>
+		<span>@Html.ActionLink("Order Detail", "OrderDetail", currentController, new { id = 1 }, null)</span>
 		)
 	</span>
 </header>

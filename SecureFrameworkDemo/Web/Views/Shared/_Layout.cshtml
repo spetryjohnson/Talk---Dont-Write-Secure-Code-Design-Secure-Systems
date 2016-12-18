@@ -40,13 +40,37 @@
         </footer>
     </div>
 
-	<!-- anti-forgery framework -->
-	<div id="AntiForgeryToken">
-		@Html.AntiForgeryToken()
-	</div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+	<!-- 
+		ANTI-CSRF framework
+
+		Create a forgery token that is injected into all forms dynamically. Any controller that inherits from
+		SecureControllerBase contains automatic forgery token validation. These two pieces together mean that
+		developers don't need to remember anything yet all forms are still protected
+	-->
+	<div id="AntiForgeryToken">
+		@Html.AntiForgeryToken()
+	</div>
+	<script type="text/javascript">
+		$(function () {
+			$("form").each(function () {
+				var form = $(this);
+				var alreadyHasToken = form.find("input[name='__RequestVerificationToken']").length > 0;
+
+				if (alreadyHasToken) {
+					return;
+				}
+
+				var tokenToClone = $("#AntiForgeryToken > input[name='__RequestVerificationToken'");
+				tokenToClone
+					.clone()
+					.appendTo(form);
+			});
+		})
+	</script>
+
 </body>
 </html>

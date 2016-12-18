@@ -40,3 +40,16 @@
 	<input type="hidden" name="id" value="@Model.Id" />
 	<input type="submit" value="Submit Form" />
 </form>
+
+
+<h3>Standard Form Post #2</h3>
+<p>
+	Testing to ensure that multiple forms on the page can both be CSRF-protected.
+</p>
+<form action="@Url.Action("ModifyOrder", "SecureFeature")" method="post">
+	@* Have to remember this or the form won't be protected from CSRF *@
+	@Html.AntiForgeryToken()
+
+	<input type="hidden" name="id" value="@Model.Id" />
+	<input type="submit" value="Submit Form" />
+</form>

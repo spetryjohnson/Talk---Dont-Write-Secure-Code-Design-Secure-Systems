@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Configuration;
+using System.Web.Helpers;
+using System.Collections.Specialized;
 using SecureFrameworkDemo.Framework;
 using SecureFrameworkDemo.Framework.WebPageAuthentication;
-using System.Configuration;
+using System.Web;
 
 namespace SecureFrameworkDemo.Controllers {
 
@@ -18,17 +21,17 @@ namespace SecureFrameworkDemo.Controllers {
 			var userIsLoggedIn = User.Identity.IsAuthenticated;
 			var userIsNotLoggedIn = !userIsLoggedIn;
 
-			// enforce authentication check
+			// AUTHENTICATION: make sure user is authenticated if accessing private resource
 			if (pageRequiresLogin && userIsNotLoggedIn) {
 				context.Result = new HttpUnauthorizedResult();
 				return;
 			}
 
-			// enforce authorization rules
+			// AUTHORIZATION: make sure user has necessary page-level permission
 			var requiredPermAttr = context.ActionDescriptor.GetAttribute<RequiredPermissionAttribute>();
 			var pageRequiresSpecificPermission = (requiredPermAttr != null);
 
-			if (pageRequiresLogin && userIsLoggedIn && pageRequiresSpecificPermission) {
+			if (pageRequiresSpecificPermission) {
 				var hasRequiredPerm = CurrentUser.Permissions.Any(
 					p => p.Id == (int)requiredPermAttr.Permission
 				);
@@ -37,6 +40,11 @@ namespace SecureFrameworkDemo.Controllers {
 					context.Result = new HttpUnauthorizedResult();
 					return;
 				}
+			}
+
+			// ANTI-CSRF: basically like adding [ValidateAntiForgeryToken] globally to all actions
+			if (context.HttpContext.Request.HttpMethod == "POST") {
+				ValidateAntiForgeryToken(context);
 			}
 
 			base.OnActionExecuting(context);
@@ -63,6 +71,16 @@ namespace SecureFrameworkDemo.Controllers {
 
 			// if not explicitly allowed as public, then it's private
 			return true;
+		}
+
+		/// <summary>
+		/// All forms using the secure controller base are expected to have an anti-CSRF token, which is added
+		/// dynamically to all forms using some JS.
+		/// </summary>
+		private void ValidateAntiForgeryToken(ActionExecutingContext context) {
+			var formToken = context.HttpContext.Request.Form["__RequestVerificationToken"];
+			var cookieToken = context.HttpContext.Request.Cookies["__RequestVerificationToken"].Value;
+			AntiForgery.Validate(cookieToken, formToken);
 		}
 	}
 }

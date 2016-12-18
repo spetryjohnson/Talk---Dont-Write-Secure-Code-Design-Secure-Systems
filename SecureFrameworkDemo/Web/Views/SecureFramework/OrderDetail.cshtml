@@ -33,6 +33,22 @@
 	Click this button to initiate a form post. (For testing CSRF stuff)
 </p>
 <form action="@Url.Action("ModifyOrder", "SecureFramework")" method="post">
+
+	@* NOTE: No Html.AntiForgeryToken() is needed - it's handled automatically by some JS *@ 
+
+	<input type="hidden" name="id" value="@Model.Id" />
+	<input type="submit" value="Submit Form" />
+</form>
+
+
+<h3>Standard Form Post #2</h3>
+<p>
+	Testing to ensure that multiple forms on the page can both be CSRF-protected.
+</p>
+<form action="@Url.Action("ModifyOrder", "SecureFramework")" method="post">
+
+	@* NOTE: No Html.AntiForgeryToken() is needed - it's handled automatically by some JS *@
+
 	<input type="hidden" name="id" value="@Model.Id" />
 	<input type="submit" value="Submit Form" />
 </form>

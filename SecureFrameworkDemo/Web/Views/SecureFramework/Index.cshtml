@@ -16,19 +16,21 @@
 	<div class="col-md-4">
 		<h2>Anonymous Access</h2>
 		<p>
-			TODO
+			All controllers are "secure by default". A list of URL patterns that allow anonymous access are maintained
+			centrally in web.config.
 		</p>
 	</div>
 	<div class="col-md-4">
 		<h2>Page Authorization</h2>
 		<p>
-			TODO
+			Controller actions use a [RequiredPermission] attribute to implement page-level permissions.
 		</p>
 	</div>
 	<div class="col-md-4">
 		<h2>Access Control</h2>
 		<p>
-			TODO
+			Access control is implemented directly in the database using row-level security. Users without the <b>ManageOrders</b>
+			permission are restricted to their data only, no app code needed.
 		</p>
 	</div>
 </div>
@@ -36,7 +38,7 @@
 	<div class="col-md-4">
 		<h2>Sensitive Data</h2>
 		<p>
-			TODO
+			View models are decorated with a PostSharp aspect attribute that specifies the permission necessary to view un-masked SSNs.
 		</p>
 	</div>
 	<div class="col-md-4">
@@ -48,7 +50,8 @@
 	<div class="col-md-4">
 		<h2>Anti-CSRF</h2>
 		<p>
-			TODO
+			Anti-forgery tokens are added automatically to all forms, and validated automatically for all actions that inherit from
+			<b>SecureControllerBase</b>. Developers literally need to do <i>nothing</i> to get forms protected from CSRF.
 		</p>
 	</div>
 </div>
