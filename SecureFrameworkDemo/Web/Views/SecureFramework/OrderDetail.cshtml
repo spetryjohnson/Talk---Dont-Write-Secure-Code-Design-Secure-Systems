@@ -32,10 +32,8 @@
 <p>
 	Click this button to initiate a form post. (For testing CSRF stuff)
 </p>
+@* NOTE: No Html.AntiForgeryToken() is needed - it's handled automatically by some JS *@
 <form action="@Url.Action("ModifyOrder", "SecureFramework")" method="post">
-
-	@* NOTE: No Html.AntiForgeryToken() is needed - it's handled automatically by some JS *@ 
-
 	<input type="hidden" name="id" value="@Model.Id" />
 	<input type="submit" value="Submit Form" />
 </form>

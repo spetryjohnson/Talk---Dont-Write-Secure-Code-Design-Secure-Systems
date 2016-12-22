@@ -89,8 +89,7 @@ namespace SecureFrameworkDemo.Controllers {
 		[Authorize]
 		[ValidateAntiForgeryToken]
 		public ActionResult ModifyOrder() {
-			// TODO: actually change something 
-			this.FlashSuccess("POST successful. (NOTE: No data were changed - haven't implemented any of that yet)");
+			this.FlashSuccess("POST successful");
 			return RedirectToAction("OrderList", new { });
 		}
 

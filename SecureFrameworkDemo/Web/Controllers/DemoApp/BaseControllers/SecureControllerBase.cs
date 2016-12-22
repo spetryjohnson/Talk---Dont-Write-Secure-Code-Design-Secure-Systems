@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using System.Configuration;
 using System.Web.Helpers;
-using System.Collections.Specialized;
 using SecureFrameworkDemo.Framework;
 using SecureFrameworkDemo.Framework.WebPageAuthentication;
-using System.Web;
 
 namespace SecureFrameworkDemo.Controllers {
 
@@ -27,20 +23,7 @@ namespace SecureFrameworkDemo.Controllers {
 				return;
 			}
 
-			// AUTHORIZATION: make sure user has necessary page-level permission
-			var requiredPermAttr = context.ActionDescriptor.GetAttribute<RequiredPermissionAttribute>();
-			var pageRequiresSpecificPermission = (requiredPermAttr != null);
-
-			if (pageRequiresSpecificPermission) {
-				var hasRequiredPerm = CurrentUser.Permissions.Any(
-					p => p.Id == (int)requiredPermAttr.Permission
-				);
-
-				if (!hasRequiredPerm) {
-					context.Result = new HttpUnauthorizedResult();
-					return;
-				}
-			}
+			// AUTHORIZATION: handled by the [RequiredPermission] attribute
 
 			// ANTI-CSRF: basically like adding [ValidateAntiForgeryToken] globally to all actions
 			if (context.HttpContext.Request.HttpMethod == "POST") {
