@@ -43,6 +43,21 @@
 	<h2>@ViewBag.Title</h2>
 
 	<div class="righthand-nav">
+		<!-- switch between areas (secure feature, secure framework, etc) -->
+		<div class="link-list">
+			<span class="nav-label">Area:</span>
+
+			@foreach (var linkData in controllers) {
+				if (linkData.Key == currentController) {
+					<span class="nav-link active">@linkData.Value</span>
+				}
+				else {
+					var linkUrl = HttpContext.Current.Request.RawUrl.Replace(currentController, linkData.Key);
+					<span class="nav-link"><a href="@linkUrl">@linkData.Value</a></span>
+				}
+			}
+		</div>
+
 		<!-- switch between pages -->
 		<div class="link-list">
 			<span class="nav-label">Page:</span>
@@ -62,28 +77,13 @@
 			}
 		</div>
 
-		<!-- switch between areas (secure feature, secure framework, etc) -->
-		<div class="link-list">
-			<span class="nav-label">Area:</span>
-
-			@foreach (var linkData in controllers) {
-				if (linkData.Key == currentController) {
-					<span class="nav-link active">@linkData.Value</span>
-				}
-				else {
-					var linkUrl = HttpContext.Current.Request.RawUrl.Replace(currentController, linkData.Key);
-					<span class="nav-link"><a href="@linkUrl">@linkData.Value</a></span>
-				}
-			}
-		</div>
-
 		<!-- switch between users -->
 		<div class="link-list">
 			<span class="nav-label">User:</span>
 
 			@foreach (var user in users) {
 				var userEmail = user + "@example.com";
-				var isCurrentUser = CurrentUser.UserName.ToLower() == userEmail.ToLower();
+				var isCurrentUser = (CurrentUser?.UserName ?? "").ToLower() == userEmail.ToLower();
 				var loginUrl = Url.Action("AutoLogin", "AutoLogin", new { user = userEmail, returnUrl = this.Request.RawUrl });
 
 				if (isCurrentUser) {
