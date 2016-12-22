@@ -2,10 +2,11 @@
 	ViewBag.Title = "Secure Framework Demo - Home";
 }
 
+@Html.Partial("_IntraDemoNav", "Index")
+
 <div class="jumbotron">
-	<h1>Secure Framework Demo</h1>
 	<p>
-		This demo shows a simple set of features where the security concerns are all handled in framework code, leaving
+		This area shows a simple set of features where the security concerns are all handled in framework code, leaving
 		the app code free to deal with functional requirements.
 	</p>
 	<p>Compare the code in the <b>SecureFrameworkController</b> and related views to the other controllers.</p>

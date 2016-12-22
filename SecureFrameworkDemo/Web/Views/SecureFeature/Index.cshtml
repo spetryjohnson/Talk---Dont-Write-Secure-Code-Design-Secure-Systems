@@ -6,9 +6,10 @@
 	var ORDER_DETAIL_URL = Url.Action("OrderDetail", "SecureFeature", new { id = 1 });
 }
 
+@Html.Partial("_IntraDemoNav", "Index")
+
 <div class="jumbotron">
-    <h1>Secure Features Demo</h1>
-	<p>This demo shows a simple set of features where the security concerns are handled in application level code.</p>
+	<p>This area shows a simple set of features where the security concerns are handled in application level code.</p>
 	<p>Compare the code in the <b>SecureFeatureController</b> and related views to the other controllers.</p>
 	<p><a class="btn btn-default" href="@ORDER_LIST_URL">Begin &raquo;</a></p>
 </div>

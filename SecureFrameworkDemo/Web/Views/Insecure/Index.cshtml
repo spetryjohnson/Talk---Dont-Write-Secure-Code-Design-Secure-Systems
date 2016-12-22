@@ -2,9 +2,10 @@
     ViewBag.Title = "Insecure Demo - Home";
 }
 
+@Html.Partial("_IntraDemoNav", "Index")
+
 <div class="jumbotron">
-    <h1>Insecure Features Demo</h1>
-	<p>This demo shows a simple set of features with no security at all. &lt;gasp&gt;</p>
+	<p>This area shows a simple set of features with no security at all. &lt;gasp&gt;</p>
 	<p>Compare the code in the <b>InsecureController</b> and related views to the other controllers.</p>
 	<p><a class="btn btn-default" href="@Url.Action("OrderList", "Insecure")">Begin &raquo;</a></p>
 </div>

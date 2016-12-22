@@ -18,13 +18,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Demo Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Insecure Demo", "Index", "Insecure")</li>
-					<li>@Html.ActionLink("Secure Feature Demo", "Index", "SecureFeature")</li>
-					<li>@Html.ActionLink("Secure Framework Demo", "Index", "SecureFramework")</li>
+                    <li>@Html.ActionLink("Insecure", "Index", "Insecure")</li>
+					<li>@Html.ActionLink("Secure Features", "Index", "SecureFeature")</li>
+					<li>@Html.ActionLink("Secure Framework", "Index", "SecureFramework")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

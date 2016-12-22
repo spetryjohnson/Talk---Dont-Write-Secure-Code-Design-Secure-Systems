@@ -193,6 +193,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DemoApp\AutoLoginController.cs" />
     <Compile Include="Controllers\DemoApp\InsecureController.cs" />
     <Compile Include="Controllers\DemoApp\SecureFrameworkController.cs" />
     <Compile Include="Controllers\DemoApp\SecureFeatureController.cs" />

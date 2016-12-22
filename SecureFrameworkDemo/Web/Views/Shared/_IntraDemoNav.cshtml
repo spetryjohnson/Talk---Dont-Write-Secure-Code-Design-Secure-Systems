@@ -1,43 +1,99 @@
 ﻿@model string
 @{ 
 	var currentController = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+	var currentAction = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
 
-	var links = new List<KeyValuePair<string, string>> {
+	var controllers = new List<KeyValuePair<string, string>> {
 		new KeyValuePair<string, string>("Insecure", "Insecure"),
 		new KeyValuePair<string, string>("SecureFeature", "Secure Feature"),
 		new KeyValuePair<string, string>("SecureFramework", "Secure Framework")
 	};
+
+	var pages = new List<Dictionary<string, object>> {
+		new Dictionary<string, object> { { "Label", "Index" }, { "Action", "Index" }, { "RouteVars", null } },
+		new Dictionary<string, object> { { "Label", "Order List" }, { "Action", "OrderList" }, { "RouteVars", null } },
+		new Dictionary<string, object> { { "Label", "Order Details" }, { "Action", "OrderDetail" }, { "RouteVars", new { id = 1 } } },
+		new Dictionary<string, object> { { "Label", "Manage Orders" }, { "Action", "ManageOrders" }, { "RouteVars", null } }
+	};
+
+	var users = new List<string> { "Admin", "RestrictedAdmin", "User1", "User2" };
 }
 
 <style type="text/css">
+	/* float the nav panel to the right */
 	header > h2 { display: inline-block; }
-	header span.intra-demo-links { margin-left: 20px; }
-	header span.intra-demo-links span.active { font-weight: normal; }
-	header span.intra-demo-links > span:after { content: " | "; }
-	header span.intra-demo-links > span:last-child:after { content: ""; }
+	header .righthand-nav { float: right; padding: 20px; margin-bottom: 10px; background-color: oldlace; }
+
+	/* clearfix */
+	header:after {
+		visibility: hidden;
+		display: block;
+		content: "";
+		clear: both;
+		height: 0;
+	}
+
+	header .link-list .nav-label { font-weight: bold; width: 150px; }
+	header .link-list > .nav-link:after { content: " | "; }
+	header .link-list > .nav-link:last-child:after { content: ""; }
+	header .link-list .nav-link.active { font-weight: bold; }
 </style>
 
 <header>
 	<h2>@ViewBag.Title</h2>
-	<span class="intra-demo-links">
-		(
-		@foreach (var linkPair in links) {
-			if (linkPair.Key == currentController) {
-				<span class="active">@linkPair.Value</span>
+
+	<div class="righthand-nav">
+		<!-- switch between pages -->
+		<div class="link-list">
+			<span class="nav-label">Page:</span>
+
+			@foreach (var linkData in pages) {
+				var action = (string)linkData["Action"];
+				var label = (string)linkData["Label"];
+				var routeData = (object)linkData["RouteVars"];
+
+				if (action == currentAction) {
+					<span class="nav-link active">@label</span>
+				}
+				else {
+					var linkUrl = Url.Action(action, currentController, routeData);
+					<span class="nav-link"><a href="@linkUrl">@label</a></span>
+				}
 			}
-			else {
-				var linkUrl = HttpContext.Current.Request.RawUrl.Replace(currentController, linkPair.Key);
-				<span><a href="@linkUrl">@linkPair.Value</a></span>
+		</div>
+
+		<!-- switch between areas (secure feature, secure framework, etc) -->
+		<div class="link-list">
+			<span class="nav-label">Area:</span>
+
+			@foreach (var linkData in controllers) {
+				if (linkData.Key == currentController) {
+					<span class="nav-link active">@linkData.Value</span>
+				}
+				else {
+					var linkUrl = HttpContext.Current.Request.RawUrl.Replace(currentController, linkData.Key);
+					<span class="nav-link"><a href="@linkUrl">@linkData.Value</a></span>
+				}
 			}
-		}
-		)
-	</span>
-	<span class="intra-demo-links">
-		(
-		<span>@Html.ActionLink("Order List", "OrderList", currentController)</span>
-		<span>@Html.ActionLink("Manage Orders", "ManageOrders", currentController)</span>
-		<span>@Html.ActionLink("Order Detail", "OrderDetail", currentController, new { id = 1 }, null)</span>
-		)
-	</span>
+		</div>
+
+		<!-- switch between users -->
+		<div class="link-list">
+			<span class="nav-label">User:</span>
+
+			@foreach (var user in users) {
+				var userEmail = user + "@example.com";
+				var isCurrentUser = CurrentUser.UserName.ToLower() == userEmail.ToLower();
+				var loginUrl = Url.Action("AutoLogin", "AutoLogin", new { user = userEmail, returnUrl = this.Request.RawUrl });
+
+				if (isCurrentUser) {
+					<span class="nav-link active">@user</span>
+				}
+				else {
+					<span class="nav-link"><a href="@loginUrl">@user</a></span>
+				}
+			}
+		</div>
+	</div>
 </header>
 

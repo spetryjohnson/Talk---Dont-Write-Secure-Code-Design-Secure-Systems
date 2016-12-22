@@ -35,7 +35,7 @@ namespace SecureFrameworkDemo.Migrations {
 						OR EXISTS (
 							SELECT	1
 							FROM	dbo.PermissionApplicationUsers
-							WHERE	Permission_Id = 200	-- ViewOrdersForOthers
+							WHERE	Permission_Id = 100	-- ManageOrders
 									AND ApplicationUser_Id = CAST(SESSION_CONTEXT(N'UserId') AS nvarchar(128))
 						)
 					)
