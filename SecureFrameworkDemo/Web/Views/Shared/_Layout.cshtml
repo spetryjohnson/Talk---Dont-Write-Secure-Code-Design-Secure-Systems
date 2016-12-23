@@ -77,13 +77,14 @@
 			// globally add the token to all FORM POSTs
 			$("form").each(function () {
 				var form = $(this);
-				var alreadyHasToken = form.find("input[name='__RequestVerificationToken']").length > 0;
+				var tokenField = "__RequestVerificationToken";
+				var alreadyHasToken = form.find("input[name='" + tokenField + "']").length > 0;
 
 				if (alreadyHasToken) {
 					return;
 				}
 
-				var tokenToClone = $("#AntiForgeryToken > input[name='__RequestVerificationToken'");
+				var tokenToClone = $("#AntiForgeryToken > input[name='" + tokenField + "'");
 				tokenToClone
 					.clone()
 					.appendTo(form);
