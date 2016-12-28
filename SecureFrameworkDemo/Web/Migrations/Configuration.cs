@@ -57,7 +57,7 @@ namespace SecureFrameworkDemo.Migrations {
 
 			// restricted admin can manage orders, but not see SSN
 			var restrictedAdmin = new ApplicationUser {
-				UserName = "restrictedAdmin@example.com",
+				UserName = "adminCantSeeSSN@example.com",
 				Permissions = new HashSet<Permission> { PERM_BASIC_PRIVS, PERM_MANAGE_ORDERS },
 				SSN = "222-22-2222"
 			};

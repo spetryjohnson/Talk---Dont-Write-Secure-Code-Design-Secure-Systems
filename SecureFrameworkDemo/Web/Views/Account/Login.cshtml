@@ -4,10 +4,25 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="row">
+	<div class="col-md-8">
+		<h2>Auto Login</h2>
+
+		<ul>
+			@foreach (var user in new List<string> { "admin", "adminCantSeeSSN", "user1", "user2" }) {
+				var fullUsername = user + "@example.com";
+
+				<li>@Html.ActionLink(fullUsername, "AutoLogin", "AutoLogin", new { user = fullUsername, returnUrl = this.Request.QueryString["ReturnUrl"] }, null)</li>
+			}
+		</ul>
+		All passwords are <b>"P@ssw0rd"</b>
+	</div>
+</div>
 
 <div class="row">
     <div class="col-md-8">
+		<h2>Manual Login</h2>
+
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
@@ -51,19 +66,6 @@
                     </p>*@
             }
         </section>
-    </div>
-    <div class="col-md-4">
-		<b>Demo Users:</b>
-		<ul>
-			<li>admin@example.com <i>(full control)</i></li>
-			<li>restrictedAdmin@example.com <i>(can't view SSN)</i></li>
-			<li>user1@example.com</li>
-			<li>user2@example.com</li>
-		</ul>
-		All passwords are <b>"P@ssw0rd"</b>
-        @*<section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>*@
     </div>
 </div>
 
