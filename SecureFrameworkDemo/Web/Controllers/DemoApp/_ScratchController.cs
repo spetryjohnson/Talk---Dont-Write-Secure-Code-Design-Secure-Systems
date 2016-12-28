@@ -4,6 +4,9 @@ using SecureFrameworkDemo.Models;
 using static Santhos.Web.Mvc.BootstrapFlashMessages.FlashControllerExtensions;
 using SecureFrameworkDemo.Framework.WebPageAuthentication;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace SecureFrameworkDemo.Controllers.Scratch {
 
@@ -18,11 +21,18 @@ namespace SecureFrameworkDemo.Controllers.Scratch {
 			return View();
 		}
 
-		public ActionResult OrderDetail() {
+		[RequiredPermission(PermissionEnum.BasicPrivileges)]
+		public ActionResult SensitiveAction() {
 			EnforceSecurityRules();
 			return View();
 		}
 
+		[RequiredPermission(PermissionEnum.BasicPrivileges)]
+		public ActionResult Index() {
+			return View();
+		}
+
+		[RequiredPermission(PermissionEnum.ManageOrders)]
 		public ActionResult OrderDetails() {
 			return View();
 		}

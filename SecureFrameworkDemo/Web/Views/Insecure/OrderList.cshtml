@@ -17,6 +17,15 @@
 	</div>
 </div>
 
+<form action="" method="get">
+	<div style="margin-bottom: 10px">
+		Filter by user name:
+		<input type="text" name="userName" value="@(Request.QueryString["userName"]?.ToAttributeEncoded())" size="15" />
+		<input type="submit" value="filter" />
+		<input type="button" value="reset" onclick="document.location.href = '@Request.Url.GetLeftPart(UriPartial.Path)';" />
+	</div>
+</form>
+
 <table class="table">
 	<tr>
 		<td>Id</td>

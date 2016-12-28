@@ -14,14 +14,8 @@ namespace SecureFrameworkDemo.Framework.RowLevelSecurity {
 	/// </summary>
 	public class AddUserIdToSessionContextInterceptor : IDbConnectionInterceptor {
 
-		public void Opened(DbConnection connection, DbConnectionInterceptionContext interceptionContext) {
-
-			var rlsEnabled = ConfigurationManager.AppSettings["EnableRowLevelSecurity"].ToBoolean(false);
-			if (!rlsEnabled) {
-				return;
-			}
-
-			// If no user is logged in, leave SESSION_CONTEXT null and all rows will be returned
+		public void Opened(DbConnection conn, DbConnectionInterceptionContext ctx) {
+			// If no user is logged in, leave SESSION_CONTEXT null & return everything
 			var isLoggedIn = (HttpContext.Current != null) && HttpContext.Current.User.Identity.IsAuthenticated;
 
 			if (!isLoggedIn) {
@@ -42,7 +36,7 @@ namespace SecureFrameworkDemo.Framework.RowLevelSecurity {
 			var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
 			if (userId != null) {
-				DbCommand cmd = connection.CreateCommand();
+				DbCommand cmd = conn.CreateCommand();
 				cmd.CommandText = "EXEC sp_set_session_context @key=N'UserId', @value=@UserId";
 				DbParameter param = cmd.CreateParameter();
 				param.ParameterName = "@UserId";

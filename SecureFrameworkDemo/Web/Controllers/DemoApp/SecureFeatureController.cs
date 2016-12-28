@@ -48,8 +48,8 @@ namespace SecureFrameworkDemo.Controllers {
 		/// Action implements its own access control checks.
 		/// </summary>
 		[Authorize]
-		public ActionResult OrderList() {
-			var allOrders = OrderSvc.GetAll();
+		public ActionResult OrderList(string userName = null) {
+			var allOrders = OrderSvc.GetAllNoInjection(userName: userName);
 
 			var filteredOrders = CurrentUser.HasPermission(PermissionEnum.ManageOrders)
 				? allOrders

@@ -195,6 +195,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DemoApp\AutoLoginController.cs" />
     <Compile Include="Controllers\DemoApp\InsecureController.cs" />
+    <Compile Include="Controllers\DemoApp\_ScratchController.cs" />
     <Compile Include="Controllers\DemoApp\SecureFrameworkController.cs" />
     <Compile Include="Controllers\DemoApp\SecureFeatureController.cs" />
     <Compile Include="Controllers\StandardASPNet\AccountController.cs" />

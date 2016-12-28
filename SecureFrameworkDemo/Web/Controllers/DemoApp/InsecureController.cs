@@ -32,9 +32,9 @@ namespace SecureFrameworkDemo.Controllers {
 			return View();
 		}
 
-		public ActionResult OrderList() {
+		public ActionResult OrderList(string userName = null) {
 			var model = OrderSvc
-				.GetAll().ToList()
+				.GetAllInsecure(userName: userName)
 				.Select(x => new InsecureOrderViewModel(x))
 				.ToList();
 

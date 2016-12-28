@@ -65,19 +65,14 @@
 <input id="btnSubmitAjax" type="button" value="Submit AJAX" />
 <script type="text/javascript">
 	$(function () {
-		function AddAntiForgeryToken(data) {
-			data.__RequestVerificationToken = $("#AjaxAntiForgeryToken > input").val();
-			return data;
-		}
-
 		$("#btnSubmitAjax").on("click", function () {
 			$.ajax({
 				url: "@Url.Action("ModifyOrderAjax", "SecureFeature")",
 				type: "POST",
-				// SECURE FEATURE: AJAX requests require extra effort to include the token
-				data: AddAntiForgeryToken({
-					"orderId": @Model.Id
-				}),
+				data: {
+					"orderId": @Model.Id,
+					"__RequestVerificationToken": $("#AjaxAntiForgeryToken > input").val()
+				},
 				dataType: "json",
 				success: function(data) {
 					alert(JSON.stringify(data));

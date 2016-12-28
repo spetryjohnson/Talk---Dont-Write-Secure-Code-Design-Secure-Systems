@@ -137,6 +137,13 @@ namespace SecureFrameworkDemo.Framework {
 		}
 
 		/// <summary>
+		/// Syntactic sugar for Html.AttributeEncode(). Converts null input to an empty string, to allow for method chaining.
+		/// </summary>
+		public static string ToAttributeEncoded(this string val) {
+			return HttpUtility.HtmlAttributeEncode(val ?? "");
+		}
+
+		/// <summary>
 		/// Parses the string as a boolean, matching commonly used representations ("1", "Y", "no", etc)
 		/// to their appropriate boolean p_value. Throws an exception if the string does not match
 		/// any expected representation.

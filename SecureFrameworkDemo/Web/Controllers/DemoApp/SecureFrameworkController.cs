@@ -40,10 +40,11 @@ namespace SecureFrameworkDemo.Controllers {
 
 		/// <summary>
 		/// The row-level security feature means that the controller doesn't have to do any
-		/// special filtering here.
+		/// special filtering here. We can call the "insecure" service method that doesn't
+		/// do any explicit checks, and the feature still ends up secure.
 		/// </summary>
-		public ActionResult OrderList() {
-			var ordersUserCanAccess = OrderSvc.GetAll().ToList()
+		public ActionResult OrderList(string userName = null) {
+			var ordersUserCanAccess = OrderSvc.GetAllNoInjection(userName: userName)
 				.Select(o => new SecureFrameworkOrderViewModel(o))
 				.ToList();
 

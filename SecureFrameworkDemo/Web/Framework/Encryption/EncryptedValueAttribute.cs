@@ -26,6 +26,5 @@ namespace SecureFrameworkDemo.Framework.Encryption {
 				args.Value = SampleEncryptor.Decrypt((string)args.Value);
 			}
 		}
-
 	}
 }
