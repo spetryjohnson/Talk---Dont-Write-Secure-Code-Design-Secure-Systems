@@ -48,6 +48,6 @@
 	}
 
 	public static IHtmlString FormatRequiredPerm(PermissionEnum? perm) {
-		return new HtmlString($"<span class=\"{perm.ToStringNullSafe("no-perm").ToLower()}\">{perm.ToStringNullSafe("None")}</span>");
+		return new HtmlString($"<span class=\"{perm.ToStringNullSafe("no-perm").ToLower()}\">{perm.ToStringNullSafe("")}</span>");
 	}
 }
