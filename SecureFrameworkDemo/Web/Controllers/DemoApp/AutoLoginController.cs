@@ -22,7 +22,7 @@ namespace SecureFrameworkDemo.Controllers {
 
 			switch (result) {
 				case SignInStatus.Success:
-					return Redirect(returnUrl);
+					return Redirect(returnUrl ?? "/");
 				default:
 					throw new ApplicationException("Auto login had result: " + result.ToString());
 			}
