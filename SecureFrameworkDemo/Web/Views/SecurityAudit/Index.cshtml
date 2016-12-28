@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Security Audit Area";
+}
+
+@Html.Partial("_IntraDemoNav", "Index")
+
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		This page:
+		<ul>
+			<li>Demonstrates the sort of report that can be generated with static analysis tools</li>
+		</ul>
+	</div>
+
+	@ViewBag.Output
+
+	@RenderReport()
+</div>
+
+@functions {
+
+	public string RenderReport() {
+		return "report";
+	}
+
+
+}
