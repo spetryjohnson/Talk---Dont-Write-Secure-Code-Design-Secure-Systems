@@ -1,13 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
-using System.Web;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Reflection;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections.Generic;
+using SecureFrameworkDemo.Framework;
 using SecureFrameworkDemo.Models;
+using SecureFrameworkDemo.Framework.WebPageAuthentication;
 
 namespace SecureFrameworkDemo.Controllers {
 
@@ -21,7 +24,7 @@ namespace SecureFrameworkDemo.Controllers {
 	/// (For bonus points, use http://approvaltests.com/ to track the endpoint security report artifact 
 	/// over time and require manual signoff any time it changes)
 	/// </summary>
-	public class SecurityAuditController : SecureControllerBase {
+	public class SecurityAuditController : BaseController {
 
 		public ActionResult Index() {
 			ViewBag.ControllerEndpoints = GetControllerEndpointAnalysisUsingReflection();
@@ -29,26 +32,74 @@ namespace SecureFrameworkDemo.Controllers {
 			return View();
 		}
 
-		private List<ControllerAuditItem> GetControllerEndpointAnalysisUsingReflection() {
-			var report = new List<ControllerAuditItem>();
+		private List<ControllerEndpointAuditItem> GetControllerEndpointAnalysisUsingReflection() {
+			var report = new List<ControllerEndpointAuditItem>();
 
-			var bclControllerType = typeof(Controller);
-			var baseControllerType = typeof(BaseController);
-			var secureControllerType = typeof(SecureControllerBase);
-
-			var controllers = Assembly.GetExecutingAssembly()
+			var controllerActions = Assembly.GetExecutingAssembly()
 				.GetTypes()
-				.Where(t => bclControllerType.IsAssignableFrom(t));
+				.Where(type => typeof(System.Web.Mvc.Controller).IsAssignableFrom(type))
+				.SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
+				.Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
+				.Select(x => new {
+					ControllerType = x.DeclaringType,
+					Controller = x.DeclaringType.Name.Replace("Controller", ""),	// In real code, strip this from the END of the string ONLY
+					Action = x.Name,
+					ReturnType = x.ReturnType.Name,
+					Attributes = x.GetCustomAttributes(),
+					AttributeNames = x.GetCustomAttributes().Select(a => a.GetType().Name.Replace("Attribute", "")).Join(", "),
+					IsSecureController = typeof(SecureControllerBase).IsAssignableFrom(x.DeclaringType)
+				})
+				.OrderBy(x => x.Controller).ThenBy(x => x.Action)
+				.ToList();
 
-			foreach (var controller in controllers) {
-				report.Add(new ControllerAuditItem {
-					Type = controller,
-					UsesBaseController = baseControllerType.IsAssignableFrom(controller),
-					UsesSecureController = secureControllerType.IsAssignableFrom(controller)
+			foreach (var mvcAction in controllerActions) {
+				// DEMO HACK: Ignoring the "scratch" controller plus the stuff inherited from the MVC starter app
+				// that I haven't cleaned out yet
+				if (mvcAction.Controller.IsIn("Scratch", "Account", "Base", "Manage")) {
+					continue;
+				}
+
+				// DEMO HACK: stuff in the "Insecure" and "SecureFeature" controllers is secured by [Authorize],
+				// but stuff in the "SecureFramework" controller uses a "secure by default" approach
+				bool requiresAuthentication;
+				if (mvcAction.IsSecureController) {
+					requiresAuthentication = SecureControllerBase.PathRequiresAuthentication(
+						$"{mvcAction.Controller}/{mvcAction.Action}"
+					);
+				}
+				else {
+					requiresAuthentication = mvcAction.Attributes.Any(a => a is AuthorizeAttribute);
+				}
+
+				var requiredPermission = mvcAction.Attributes
+					.Where(a => a is RequiredPermissionAttribute)
+					.Cast<RequiredPermissionAttribute>()
+					.FirstOrDefault()
+					?.Permission;
+
+				report.Add(new ControllerEndpointAuditItem {
+					Controller = mvcAction.Controller,
+					Action = mvcAction.Action,
+					RequiresAuthentication = requiresAuthentication,
+					RequiresPermission = requiredPermission
 				});
 			}
 
 			return report;
+		}
+
+		private IEnumerable<Type> GetMvcControllerTypes() {
+			return Assembly.GetExecutingAssembly()
+				.GetTypes()
+				.Where(t => typeof(Controller).IsAssignableFrom(t));
+		}
+
+		private IEnumerable<MethodInfo> GetMvcEndpoints(Type controllerType) {
+			Contract.Requires(typeof(Controller).IsAssignableFrom(controllerType));
+
+			return controllerType
+				.GetMethods()
+				.Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)));
 		}
 
 		private string GetControllerEndpointAnalysisUsingRoslyn() {

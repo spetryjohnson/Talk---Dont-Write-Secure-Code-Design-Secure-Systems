@@ -41,7 +41,7 @@ namespace SecureFrameworkDemo.Controllers {
 		///		The absolute path of the request. This should NOT include "http://" portion. This MAY include
 		///		querystring data, which is ignored.
 		///	</param>
-		protected static bool PathRequiresAuthentication(string requestedPath) {
+		public static bool PathRequiresAuthentication(string requestedPath) {
 			// strip the querystring
 			var path = requestedPath.Split("?")[0];
 

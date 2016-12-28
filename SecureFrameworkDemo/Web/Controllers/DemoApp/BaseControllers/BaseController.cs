@@ -11,7 +11,7 @@ namespace SecureFrameworkDemo.Controllers {
 
 	public class BaseController : Controller {
 
-		public ApplicationUserManager UserManager {
+		protected ApplicationUserManager UserManager {
 			get {
 				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 			}
@@ -20,7 +20,7 @@ namespace SecureFrameworkDemo.Controllers {
 		private ApplicationUserManager _userManager;
 
 
-		public ApplicationUser CurrentUser {
+		protected internal ApplicationUser CurrentUser {
 			get {
 				if (this._currentUser == null) {
 					if (User.Identity.IsAuthenticated) {
@@ -34,13 +34,14 @@ namespace SecureFrameworkDemo.Controllers {
 		private ApplicationUser _currentUser;
 
 
-		public ApplicationDbContext AppDbContext {
+		protected ApplicationDbContext AppDbContext {
 			get {
 				return _dbContext ?? (_dbContext = new ApplicationDbContext());
 			}
 			set { _dbContext = value; }
 		}
 		private ApplicationDbContext _dbContext;
+
 
 		protected override void OnActionExecuting(ActionExecutingContext context) {
 			ViewData["Framework_CurrentUser"] = this.CurrentUser;

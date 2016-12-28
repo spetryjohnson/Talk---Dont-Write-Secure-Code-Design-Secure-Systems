@@ -1,11 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Security Audit Area";
+	ViewBag.Title = "Security Audit Area";
 
-	var controllerAudit = (List<ControllerAuditItem>)ViewBag.ControllerEndpoints;
+	var controllerAudit = (List<ControllerEndpointAuditItem>)ViewBag.ControllerEndpoints;
 }
 
 <style type="text/css">
 	span.false { color: red; }
+	span.no-perm { color: red; }
 </style>
 
 <header>
@@ -16,7 +17,7 @@
 	<div class="panel-body">
 		This page:
 		<ul>
-			<li>Demonstrates the sort of report that can be generated with static analysis tools</li>
+			<li>Demonstrates an MVC endpoint analysis conducted using Reflection</li>
 		</ul>
 	</div>
 </div>
@@ -24,17 +25,17 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Controller</th>
-			<th>Correct Base?</th>
-			<th>Secure?</th>
+			<th>Path</th>
+			<th>Requires Authentication?</th>
+			<th>Requires Permission</th>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach (var row in controllerAudit) {
 			<tr>
-				<td>@row.Type.Name</td>
-				<td>@FormatBoolean(row.UsesBaseController)</td>
-				<td>@FormatBoolean(row.UsesSecureController)</td>
+				<td>@Html.ActionLink($"{row.Controller}/{row.Action}", row.Action, row.Controller)
+				<td>@FormatBoolean(row.RequiresAuthentication)</td>
+				<td>@FormatRequiredPerm(row.RequiresPermission)</td>
 			</tr>
 			}
 	</tbody>
@@ -44,5 +45,9 @@
 
 	public static IHtmlString FormatBoolean(bool val) {
 		return new HtmlString($"<span class=\"{val.ToString().ToLower()}\">{val.ToString()}</span>");
-    }
+	}
+
+	public static IHtmlString FormatRequiredPerm(PermissionEnum? perm) {
+		return new HtmlString($"<span class=\"{perm.ToStringNullSafe("no-perm").ToLower()}\">{perm.ToStringNullSafe("None")}</span>");
+	}
 }

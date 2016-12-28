@@ -92,5 +92,14 @@ namespace SecureFrameworkDemo.Controllers {
 				message = $"POST successful for ID: {orderId}"
 			});
 		}
+
+		/// <summary>
+		/// For demo purposes - MVC will happily accept incoming requests to public controller methods, even
+		/// if they don't return an ActionResult. This is an example of a method returning a string that is
+		/// directly accessible via the URL.
+		/// </summary>
+		public string SomeMethodThatShouldBePrivate() {
+			return "This is a private string. It should never be displayed publicly";
+		}
 	}
 }

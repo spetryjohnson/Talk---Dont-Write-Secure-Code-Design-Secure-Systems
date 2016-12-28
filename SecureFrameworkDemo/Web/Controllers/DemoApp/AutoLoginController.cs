@@ -11,7 +11,7 @@ namespace SecureFrameworkDemo.Controllers {
 	/// </summary>
 	public class AutoLoginController : BaseController {
 
-		public ApplicationSignInManager SignInManager {
+		protected ApplicationSignInManager SignInManager {
 			get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
 			private set { _signInManager = value; }
 		}

@@ -31,6 +31,23 @@ namespace SecureFrameworkDemo.Framework {
 		}
 
 		/// <summary>
+		/// Returns TRUE if the target value is found in the specified list.
+		/// </summary>
+		public static bool IsIn<T>(this T val, IList<T> list) {
+			if (list == null || list.Count == 0)
+				return false;
+
+			return list.Contains(val);
+		}
+
+		/// <summary>
+		/// Returns TRUE if the target value is found in the specified list.
+		/// </summary>
+		public static bool IsIn<T>(this T val, params T[] list) {
+			return val.IsIn(list.ToEmptyIfNull().ToList());
+		}
+
+		/// <summary>
 		/// Returns TRUE if the string instance is null or refers to an empty string.
 		/// </summary>
 		public static bool IsNullOrEmpty(this string val) {
@@ -194,6 +211,15 @@ namespace SecureFrameworkDemo.Framework {
 		}
 
 		/// <summary>
+		/// Returns the original sequence or a new, empty list.
+		/// </summary>
+		public static IList<T> ToEmptyIfNull<T>(this IList<T> list) {
+			return (list == null)
+				? new List<T>()
+				: list;
+		}
+
+		/// <summary>
 		/// Converts a string into an instance of the specified Enum. The p_value is compared
 		/// first against the enum's ToString() p_value, then against its StringConstant 
 		/// attribute, and finally against it's Description attribute. If no matches are found,
@@ -271,6 +297,17 @@ namespace SecureFrameworkDemo.Framework {
 			catch (FormatException) {
 				return p_defaultVal;
 			}
+		}
+
+		public static string ToStringNullSafe(this object val, string defaultVal) {
+			if (val == null)
+				return defaultVal;
+
+			var stringRepresentation = val.ToString();
+
+			return (stringRepresentation == String.Empty)
+				? defaultVal
+				: stringRepresentation;
 		}
 	}
 }
