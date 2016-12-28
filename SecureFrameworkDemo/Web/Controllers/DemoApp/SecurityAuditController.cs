@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Reflection;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -86,20 +85,6 @@ namespace SecureFrameworkDemo.Controllers {
 			}
 
 			return report;
-		}
-
-		private IEnumerable<Type> GetMvcControllerTypes() {
-			return Assembly.GetExecutingAssembly()
-				.GetTypes()
-				.Where(t => typeof(Controller).IsAssignableFrom(t));
-		}
-
-		private IEnumerable<MethodInfo> GetMvcEndpoints(Type controllerType) {
-			Contract.Requires(typeof(Controller).IsAssignableFrom(controllerType));
-
-			return controllerType
-				.GetMethods()
-				.Where(m => m.IsPublic && !m.IsDefined(typeof(NonActionAttribute)));
 		}
 
 		private string GetControllerEndpointAnalysisUsingRoslyn() {
