@@ -1,9 +1,16 @@
 ﻿@{
     ViewBag.Title = "Security Audit Area";
+
+	var controllerAudit = (List<ControllerAuditItem>)ViewBag.ControllerEndpoints;
 }
 
-@Html.Partial("_IntraDemoNav", "Index")
+<style type="text/css">
+	span.false { color: red; }
+</style>
 
+<header>
+	<h2>@ViewBag.Title</h2>
+</header>
 
 <div class="panel panel-default">
 	<div class="panel-body">
@@ -12,17 +19,30 @@
 			<li>Demonstrates the sort of report that can be generated with static analysis tools</li>
 		</ul>
 	</div>
-
-	@ViewBag.Output
-
-	@RenderReport()
 </div>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Controller</th>
+			<th>Correct Base?</th>
+			<th>Secure?</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var row in controllerAudit) {
+			<tr>
+				<td>@row.Type.Name</td>
+				<td>@FormatBoolean(row.UsesBaseController)</td>
+				<td>@FormatBoolean(row.UsesSecureController)</td>
+			</tr>
+			}
+	</tbody>
+</table>
 
 @functions {
 
-	public string RenderReport() {
-		return "report";
-	}
-
-
+	public static IHtmlString FormatBoolean(bool val) {
+		return new HtmlString($"<span class=\"{val.ToString().ToLower()}\">{val.ToString()}</span>");
+    }
 }

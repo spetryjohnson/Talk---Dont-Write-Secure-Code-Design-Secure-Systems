@@ -318,6 +318,7 @@
     <Compile Include="Models\Orders\SecureFrameworkOrderViewModel.cs" />
     <Compile Include="Models\Orders\SecureFeatureOrderViewModel.cs" />
     <Compile Include="Models\Orders\OrderServiceInsecure.cs" />
+    <Compile Include="Models\SecurityAudit\SecurityAuditItem.cs" />
     <Compile Include="Models\Users\ApplicationUser.cs" />
     <Compile Include="Models\Orders\GetOrderApiArgs.cs" />
     <Compile Include="Models\Orders\InsecureOrderViewModel.cs" />
