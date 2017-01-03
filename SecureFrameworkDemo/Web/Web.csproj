@@ -270,6 +270,7 @@
     <Compile Include="Framework\ApiAuthentication\BearerTokenAuthorizationAttribute.cs" />
     <Compile Include="Framework\Extensions\RegexParser.cs" />
     <Compile Include="Framework\MvcViews\RazorViewBase.cs" />
+    <Compile Include="Framework\SecurityAudit\ControllerEndpointAudit.cs" />
     <Compile Include="Framework\WebPageAuthentication\RequiredPermissionAttribute.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiKeyRequestParams.cs" />
     <Compile Include="Framework\RowLevelSecurity\AddUserIdToSessionContextInterceptor.cs" />
@@ -318,7 +319,7 @@
     <Compile Include="Models\Orders\SecureFrameworkOrderViewModel.cs" />
     <Compile Include="Models\Orders\SecureFeatureOrderViewModel.cs" />
     <Compile Include="Models\Orders\OrderServiceInsecure.cs" />
-    <Compile Include="Models\SecurityAudit\ControllerEndpointAuditItem.cs" />
+    <Compile Include="Framework\SecurityAudit\ControllerEndpointAuditItem.cs" />
     <Compile Include="Models\Users\ApplicationUser.cs" />
     <Compile Include="Models\Orders\GetOrderApiArgs.cs" />
     <Compile Include="Models\Orders\InsecureOrderViewModel.cs" />

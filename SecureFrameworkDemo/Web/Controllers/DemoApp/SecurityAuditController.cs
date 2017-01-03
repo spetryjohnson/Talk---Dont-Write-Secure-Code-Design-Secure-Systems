@@ -10,6 +10,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SecureFrameworkDemo.Framework;
 using SecureFrameworkDemo.Models;
 using SecureFrameworkDemo.Framework.WebPageAuthentication;
+using SecureFrameworkDemo.Framework.SecurityAudit;
 
 namespace SecureFrameworkDemo.Controllers {
 
@@ -26,65 +27,9 @@ namespace SecureFrameworkDemo.Controllers {
 	public class SecurityAuditController : BaseController {
 
 		public ActionResult Index() {
-			ViewBag.ControllerEndpoints = GetControllerEndpointAnalysisUsingReflection();
+			ViewBag.ControllerEndpoints = new ControllerEndpointAudit(Assembly.GetExecutingAssembly());
 
 			return View();
-		}
-
-		private List<ControllerEndpointAuditItem> GetControllerEndpointAnalysisUsingReflection() {
-			var report = new List<ControllerEndpointAuditItem>();
-
-			var controllerActions = Assembly.GetExecutingAssembly()
-				.GetTypes()
-				.Where(type => typeof(System.Web.Mvc.Controller).IsAssignableFrom(type))
-				.SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
-				.Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
-				.Select(x => new {
-					ControllerType = x.DeclaringType,
-					Controller = x.DeclaringType.Name.Replace("Controller", ""),	// In real code, strip this from the END of the string ONLY
-					Action = x.Name,
-					ReturnType = x.ReturnType.Name,
-					Attributes = x.GetCustomAttributes(),
-					AttributeNames = x.GetCustomAttributes().Select(a => a.GetType().Name.Replace("Attribute", "")).Join(", "),
-					IsSecureController = typeof(SecureControllerBase).IsAssignableFrom(x.DeclaringType)
-				})
-				.OrderBy(x => x.Controller).ThenBy(x => x.Action)
-				.ToList();
-
-			foreach (var mvcAction in controllerActions) {
-				// DEMO HACK: Ignoring the "scratch" controller plus the stuff inherited from the MVC starter app
-				// that I haven't cleaned out yet
-				if (mvcAction.Controller.IsIn("Scratch", "Account", "Base", "Manage")) {
-					continue;
-				}
-
-				// DEMO HACK: stuff in the "Insecure" and "SecureFeature" controllers is secured by [Authorize],
-				// but stuff in the "SecureFramework" controller uses a "secure by default" approach
-				bool requiresAuthentication;
-				if (mvcAction.IsSecureController) {
-					requiresAuthentication = SecureControllerBase.PathRequiresAuthentication(
-						$"{mvcAction.Controller}/{mvcAction.Action}"
-					);
-				}
-				else {
-					requiresAuthentication = mvcAction.Attributes.Any(a => a is AuthorizeAttribute);
-				}
-
-				var requiredPermission = mvcAction.Attributes
-					.Where(a => a is RequiredPermissionAttribute)
-					.Cast<RequiredPermissionAttribute>()
-					.FirstOrDefault()
-					?.Permission;
-
-				report.Add(new ControllerEndpointAuditItem {
-					Controller = mvcAction.Controller,
-					Action = mvcAction.Action,
-					RequiresAuthentication = requiresAuthentication,
-					RequiresPermission = requiredPermission
-				});
-			}
-
-			return report;
 		}
 
 		private string GetControllerEndpointAnalysisUsingRoslyn() {

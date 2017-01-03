@@ -1,7 +1,8 @@
-﻿@{
+﻿@using SecureFrameworkDemo.Framework.SecurityAudit;
+@{
 	ViewBag.Title = "Security Audit Area";
 
-	var controllerAudit = (List<ControllerEndpointAuditItem>)ViewBag.ControllerEndpoints;
+	var controllerAudit = ((ControllerEndpointAudit)ViewBag.ControllerEndpoints).Endpoints;
 }
 
 <style type="text/css">
@@ -33,7 +34,7 @@
 	<tbody>
 		@foreach (var row in controllerAudit) {
 			<tr>
-				<td>@Html.ActionLink($"{row.Controller}/{row.Action}", row.Action, row.Controller)
+				<td>@Html.ActionLink(row.RelativePath, row.Action, row.Controller)
 				<td>@FormatBoolean(row.RequiresAuthentication)</td>
 				<td>@FormatRequiredPerm(row.RequiresPermission)</td>
 			</tr>
