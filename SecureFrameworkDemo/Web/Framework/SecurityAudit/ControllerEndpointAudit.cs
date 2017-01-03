@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Web.Http;
 using SecureFrameworkDemo.Controllers;
 using SecureFrameworkDemo.Framework.WebPageAuthentication;
+using System.Runtime.CompilerServices;
 
 namespace SecureFrameworkDemo.Framework.SecurityAudit {
 
@@ -29,15 +30,19 @@ namespace SecureFrameworkDemo.Framework.SecurityAudit {
 			var controllerActions = assembly
 				.GetTypes()
 				.Where(type => typeof(System.Web.Mvc.Controller).IsAssignableFrom(type))
-				.SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
-				.Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
+				.SelectMany(type => type.GetMethods(
+					BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
+				)
+				.Where(m => !m.GetCustomAttributes(typeof(CompilerGeneratedAttribute), true).Any())
 				.Select(x => new {
 					ControllerType = x.DeclaringType,
 					Controller = x.DeclaringType.Name.Replace("Controller", ""),    // HACK: In real code, strip this from the END of the string ONLY
 					Action = x.Name,
 					ReturnType = x.ReturnType.Name,
 					Attributes = x.GetCustomAttributes(),
-					AttributeNames = x.GetCustomAttributes().Select(a => a.GetType().Name.Replace("Attribute", "")).Join(", "),
+					AttributeNames = x.GetCustomAttributes().Select(
+						a => a.GetType().Name.Replace("Attribute", "")
+					).Join(", "),
 					IsSecureController = typeof(SecureControllerBase).IsAssignableFrom(x.DeclaringType)
 				})
 				.OrderBy(x => x.Controller).ThenBy(x => x.Action)
