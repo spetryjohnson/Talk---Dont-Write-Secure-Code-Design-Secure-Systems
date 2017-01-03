@@ -101,5 +101,14 @@ namespace SecureFrameworkDemo.Controllers {
 		public string SomeMethodThatShouldBePrivate() {
 			return "This is a private string. It should never be displayed publicly";
 		}
+
+		/// <summary>
+		/// For demo purposes - the SecurityTests project shows how we can use the Approval Tests library to
+		/// write automated tests against the results of a security audit. After the tests are passing, and
+		/// you have an "approved" audit output, uncomment this action and then re-run the tests.
+		/// </summary>
+		//public ActionResult NewlyAddedEndpointWithoutPermission() {
+		//	return Content("Uncomment this and re-run the tests in the SecurityTests project");
+		//}
 	}
 }

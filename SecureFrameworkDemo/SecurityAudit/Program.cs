@@ -6,17 +6,20 @@ using System.Text;
 
 namespace SecurityAudit {
 
-	class Program {
+	/// <summary>
+	/// Performs an endpoint analysis for MVC controllers and writes the report to disk, so that it can be 
+	/// examined in tests or by other automated processes.
+	/// </summary>
+	public class Program {
 
 		static void Main(string[] args) {
-
 			var outputPath = GetOutputPathFromArgs(args);
-			var report = new ControllerEndpointAudit(typeof(SecureFrameworkController).Assembly);
 
-			WriteReportToDisk(report, outputPath);
+			WriteReportToDisk(outputPath);
 		}
 
-		private static void WriteReportToDisk(ControllerEndpointAudit report, string outputPath) {
+		public static string GenerateReport() {
+			var report = new ControllerEndpointAudit(typeof(SecureFrameworkController).Assembly);
 			var sb = new StringBuilder();
 
 			sb.AppendLine("Path,Requires Auth,Requires Perm");
@@ -25,7 +28,12 @@ namespace SecurityAudit {
 				sb.AppendLine($"{endpoint.RelativePath},{endpoint.RequiresAuthentication},{endpoint.RequiresPermission}");
 			}
 
-			File.WriteAllText(outputPath, sb.ToString());
+			return sb.ToString();
+		}
+
+		public static void WriteReportToDisk(string outputPath) {
+			var fileContents = GenerateReport();
+			File.WriteAllText(outputPath, fileContents);
 		}
 
 		private static string GetOutputPathFromArgs(string[] args) {

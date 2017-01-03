@@ -1,4 +1,4 @@
-Path,Requires Auth,Requires Perm
+﻿Path,Requires Auth,Requires Perm
 AutoLogin/AutoLogin,False,
 Home/About,False,
 Home/Contact,False,
