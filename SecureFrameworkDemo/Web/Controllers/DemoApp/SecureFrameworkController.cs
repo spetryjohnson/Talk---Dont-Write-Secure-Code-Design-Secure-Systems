@@ -107,8 +107,9 @@ namespace SecureFrameworkDemo.Controllers {
 		/// write automated tests against the results of a security audit. After the tests are passing, and
 		/// you have an "approved" audit output, uncomment this action and then re-run the tests.
 		/// </summary>
-		//public ActionResult NewlyAddedEndpointWithoutPermission() {
-		//	return Content("Uncomment this and re-run the tests in the SecurityTests project");
-		//}
+		[RequiredPermission(PermissionEnum.ViewSSN)]
+		public ActionResult NewlyAddedEndpoint() {
+			return Content("Uncomment this and re-run the tests in the SecurityTests project");
+		}
 	}
 }

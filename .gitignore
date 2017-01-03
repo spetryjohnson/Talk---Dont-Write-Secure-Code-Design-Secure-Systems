@@ -322,3 +322,4 @@ __pycache__/
 
 # Cake - Uncomment if you are using it
 # tools/
+SecureFrameworkDemo/SecurityTests/EndpointAuditTests.Endpoint_analysis_file_matches_expectations.received.txt

@@ -1,8 +1,9 @@
 ﻿using System;
-using SecureFrameworkDemo.Controllers;
-using SecureFrameworkDemo.Framework.SecurityAudit;
 using System.IO;
 using System.Text;
+using SecureFrameworkDemo.Controllers;
+using SecureFrameworkDemo.Framework.SecurityAudit;
+using SecureFrameworkDemo.Framework;
 
 namespace SecurityAudit {
 
@@ -19,13 +20,17 @@ namespace SecurityAudit {
 		}
 
 		public static string GenerateReport() {
-			var report = new ControllerEndpointAudit(typeof(SecureFrameworkController).Assembly);
+			var report = new ControllerEndpointAudit(
+				typeof(SecureFrameworkController).Assembly
+			);
+
 			var sb = new StringBuilder();
-
-			sb.AppendLine("Path,Requires Auth,Requires Perm");
-
 			foreach (var endpoint in report.Endpoints) {
-				sb.AppendLine($"{endpoint.RelativePath},{endpoint.RequiresAuthentication},{endpoint.RequiresPermission}");
+				sb.AppendLine(
+					endpoint.RelativePath + "\n"
+					+ (endpoint.RequiresAuthentication ? "REQUIRES AUTH" : "PUBLIC") + " / "
+					+ endpoint.RequiresPermission.ToStringNullSafe("[no perm required]") + "\n"
+				);
 			}
 
 			return sb.ToString();
@@ -38,7 +43,7 @@ namespace SecurityAudit {
 
 		private static string GetOutputPathFromArgs(string[] args) {
 			var defaultDir = Environment.CurrentDirectory;
-			var defaultFilename = $"output-{DateTime.Now.ToString("yyyyMMddHHmmss")}.csv";
+			var defaultFilename = $"EndpointAnalysis-{DateTime.Now.ToString("yyyyMMddHHmmss")}.txt";
 
 			// would have prefered to use CommandLineParser nuget package, but decided not to
 			// take a dependency in the demo
