@@ -9,28 +9,27 @@ namespace SecureFrameworkDemo.Controllers {
 
 	public class SecureControllerBase : BaseController {
 
-		protected override void OnActionExecuting(ActionExecutingContext context) {
+		protected override void OnActionExecuting(ActionExecutingContext ctx) {
 			var pageRequiresLogin = PathRequiresAuthentication(
-				context.RequestContext.HttpContext.Request.Path
+				ctx.RequestContext.HttpContext.Request.Path
 			);
 
-			var userIsLoggedIn = User.Identity.IsAuthenticated;
-			var userIsNotLoggedIn = !userIsLoggedIn;
+			var userIsNotLoggedIn = !User.Identity.IsAuthenticated;
 
-			// AUTHENTICATION: make sure user is authenticated if accessing private resource
+			// AUTHENTICATION
 			if (pageRequiresLogin && userIsNotLoggedIn) {
-				context.Result = new HttpUnauthorizedResult();
+				ctx.Result = new HttpUnauthorizedResult();
 				return;
 			}
 
-			// AUTHORIZATION: handled by the [RequiredPermission] attribute
+			// AUTHORIZATION (handled by the [RequiredPermission] attribute)
 
 			// ANTI-CSRF: basically like adding [ValidateAntiForgeryToken] globally to all actions
-			if (context.HttpContext.Request.HttpMethod == "POST") {
-				ValidateAntiForgeryToken(context);
+			if (ctx.HttpContext.Request.HttpMethod == "POST") {
+				ValidateAntiForgeryToken(ctx);
 			}
 
-			base.OnActionExecuting(context);
+			base.OnActionExecuting(ctx);
 		}
 
 		/// <summary>
