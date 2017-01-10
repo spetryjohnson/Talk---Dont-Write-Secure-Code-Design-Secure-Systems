@@ -38,20 +38,20 @@ namespace SecureFrameworkDemo.Framework.WebPageAuthentication {
 
 			var application = (HttpApplication)sender;
 			var context = (HttpContext)(application.Context);
+			var isAlreadyLoggedIn = context?.User?.Identity?.IsAuthenticated ?? false;
+			var urlAllowsPublicAcccess = PathRequiresAuthentication(context.Request.Path) == false;
 
-			// don't care about public resources
-			if (PathRequiresAuthentication(context.Request.Path) == false) {
+			if (urlAllowsPublicAcccess) {
 				return;
 			}
 
-			// if we get here then a session is required. If authenticated, then continue
-			if (context.User.Identity.IsAuthenticated) {
+			if (isAlreadyLoggedIn) {
 				return;
 			}
 
-			// if we get here then a session is requires and the user is NOT logged in, 
-			// so redirect them to the login
-			context.Response.Redirect("/account/login?returnUrl=" + HttpUtility.UrlEncode(context.Request.Path));
+			context.Response.Redirect(
+				"/account/login?returnUrl=" + HttpUtility.UrlEncode(context.Request.Path)
+			);
 		}
 
 		/// <summary>
