@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Security.Permissions;
 using System.Web;
-using System.Web.Security;
 
 namespace SecureFrameworkDemo.Framework.WebPageAuthentication {
 
@@ -39,15 +36,10 @@ namespace SecureFrameworkDemo.Framework.WebPageAuthentication {
 			var application = (HttpApplication)sender;
 			var context = (HttpContext)(application.Context);
 			var isAlreadyLoggedIn = context?.User?.Identity?.IsAuthenticated ?? false;
-			var urlAllowsPublicAcccess = PathRequiresAuthentication(context.Request.Path) == false;
+			var urlAllowsPublicAcccess = !PathRequiresAuthentication(context.Request.Path);
 
-			if (urlAllowsPublicAcccess) {
-				return;
-			}
-
-			if (isAlreadyLoggedIn) {
-				return;
-			}
+			if (urlAllowsPublicAcccess) { return; }
+			if (isAlreadyLoggedIn) { return; }
 
 			context.Response.Redirect(
 				"/account/login?returnUrl=" + HttpUtility.UrlEncode(context.Request.Path)
