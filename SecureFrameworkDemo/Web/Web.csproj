@@ -279,6 +279,7 @@
     <Compile Include="Framework\Extensions\RegexParser.cs" />
     <Compile Include="Framework\MvcViews\RazorViewBase.cs" />
     <Compile Include="Framework\SecurityAudit\ControllerEndpointAudit.cs" />
+    <Compile Include="Framework\WebPageAuthentication\PrivateByDefaultAuthModule.cs" />
     <Compile Include="Framework\WebPageAuthentication\RequiredPermissionAttribute.cs" />
     <Compile Include="Framework\ApiAuthentication\ApiKeyRequestParams.cs" />
     <Compile Include="Framework\RowLevelSecurity\AddUserIdToSessionContextInterceptor.cs" />

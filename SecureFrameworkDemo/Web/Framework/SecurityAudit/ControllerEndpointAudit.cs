@@ -60,7 +60,7 @@ namespace SecureFrameworkDemo.Framework.SecurityAudit {
 				// you'd obviously want to standardize on a single authentication system.
 				bool requiresAuthentication;
 				if (mvcAction.IsSecureController) {
-					requiresAuthentication = SecureControllerBase.PathRequiresAuthentication(
+					requiresAuthentication = PrivateByDefaultAuthModule.PathRequiresAuthentication(
 						$"{mvcAction.Controller}/{mvcAction.Action}"
 					);
 				}
