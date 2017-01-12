@@ -14,8 +14,11 @@ namespace SecureFrameworkDemo.Controllers {
 		[HttpGet]
 		[BearerTokenAuthorization(PermissionEnum.API_ViewOrders)]
 		public HttpResponseMessage Get([FromUri] GetOrderApiArgs args) {
-
-			return Request.CreateResponse(HttpStatusCode.OK, new { });
+			// magic happens here
+			return Request.CreateResponse(
+				HttpStatusCode.OK, 
+				new { }
+			);
 		}
 	}
 }

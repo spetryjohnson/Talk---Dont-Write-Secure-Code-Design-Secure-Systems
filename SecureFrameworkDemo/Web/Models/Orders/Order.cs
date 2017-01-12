@@ -22,6 +22,5 @@ namespace SecureFrameworkDemo.Models {
 		public Order() {
 			PlacedOn = DateTime.Now;
 		}
-
 	}
 }
